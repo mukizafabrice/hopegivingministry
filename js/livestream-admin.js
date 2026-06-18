@@ -1,9 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const LIVE_WINDOW_MS = 12 * 60 * 60 * 1000;
   const defaultState = { enabled: false, url: '', updatedAt: 0 };
-  const ADMIN_USER = 'admin';
-  const ADMIN_PASSWORDS = new Set(['admin', 'hope2026', 'Hope2026']);
-  const API_URL = '../api/live-stream';
+  const API_URL = '/api/live-stream';
 
   const modal = document.getElementById('admin-modal');
   const trigger = document.getElementById('admin-trigger');
@@ -200,9 +198,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loginError.style.display = 'none';
 
     try {
-      const valid = usernameInput.value.trim().toLowerCase() === ADMIN_USER && ADMIN_PASSWORDS.has(passwordInput.value);
-      if (!valid) throw new Error('Invalid username or password.');
-
       await apiRequest('login', {
         username: usernameInput.value.trim(),
         password: passwordInput.value
@@ -249,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
         url
       });
 
-      showStatus('Live stream saved to js/live.json.', 'ok');
+      showStatus('Live stream saved for all visitors.', 'ok');
       if (result.state) syncAdminFields(result.state);
       await updateLiveView();
     } catch (error) {

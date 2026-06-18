@@ -2,7 +2,10 @@
   "name": "hope-giving-ministry-site",
   "private": true,
   "version": "1.0.0",
+  "dependencies": {
+    "@netlify/blobs": "*"
+  },
   "scripts": {
-    "start": "node server.js"
+    "dev": "netlify dev"
   }
 }

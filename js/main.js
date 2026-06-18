@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const getLiveState = async () => {
     const liveWindowMs = 12 * 60 * 60 * 1000;
     try {
-      const response = await fetch(`../js/live.json?t=${Date.now()}`, { cache: 'no-store' });
+      const response = await fetch(`/api/live-stream?t=${Date.now()}`, { cache: 'no-store' });
       if (!response.ok) return false;
       const state = await response.json();
       const updatedAt = Number(state.updatedAt || 0);
