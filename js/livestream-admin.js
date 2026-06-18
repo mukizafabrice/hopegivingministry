@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const LIVE_WINDOW_MS = 12 * 60 * 60 * 1000;
   const defaultState = { enabled: false, url: '', updatedAt: 0 };
+  const ADMIN_USER = 'admin';
   const API_URL = '/api/live-stream';
 
   const modal = document.getElementById('admin-modal');
@@ -22,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const reminderBtn = document.getElementById('reminder-btn');
 
   const isAdminSignedIn = () => sessionStorage.getItem('hgmAdmin') === '1';
+  let adminPasswordCache = '';
 
   const apiRequest = async (action, payload = {}) => {
     const response = await fetch(API_URL, {
@@ -199,11 +201,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       await apiRequest('login', {
-        username: usernameInput.value.trim(),
+        username: ADMIN_USER,
         password: passwordInput.value
       });
 
       sessionStorage.setItem('hgmAdmin', '1');
+      adminPasswordCache = passwordInput.value;
       passwordInput.value = '';
       showManage();
       showStatus('Logged in.', 'ok');
@@ -240,6 +243,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       const result = await apiRequest('save', {
+        username: ADMIN_USER,
+        password: adminPasswordCache,
         enabled: liveToggle.checked,
         url
       });
@@ -248,6 +253,11 @@ document.addEventListener('DOMContentLoaded', () => {
       if (result.state) syncAdminFields(result.state);
       await updateLiveView();
     } catch (error) {
+      if ((error.message || '').toLowerCase().includes('invalid username or password')) {
+        adminPasswordCache = '';
+        sessionStorage.removeItem('hgmAdmin');
+        showLogin();
+      }
       showStatus(error.message, 'error');
     } finally {
       setBusy(saveBtn, false);
@@ -261,6 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Session may already be gone.
     } finally {
       sessionStorage.removeItem('hgmAdmin');
+      adminPasswordCache = '';
       passwordInput.value = '';
       showLogin();
       showStatus('Logged out.', 'ok');

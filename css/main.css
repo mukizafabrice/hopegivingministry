@@ -287,16 +287,23 @@ ul, ol { list-style: none; }
 }
 .events-carousel-viewport {
   position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
 }
 .events-carousel-track {
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: minmax(280px, 340px);
   gap: 16px;
+  width: 100%;
+  min-width: 0;
   overflow-x: auto;
   padding: 4px 4px 10px;
   scroll-snap-type: x mandatory;
   scroll-padding-inline: 4px;
+  overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
@@ -359,6 +366,14 @@ ul, ol { list-style: none; }
 }
 .event-card + .event-card {
   margin-top: 0;
+}
+.department-row {
+  display: grid;
+  gap: 64px;
+  align-items: center;
+}
+.department-visual {
+  min-width: 0;
 }
 .sermon-list-intro {
   display: flex;
@@ -841,24 +856,65 @@ ul, ol { list-style: none; }
   .events-carousel-top {
     align-items: flex-start;
   }
+  .events-carousel,
+  .events-carousel-viewport {
+    max-width: 100%;
+    overflow-x: hidden;
+    touch-action: pan-y;
+  }
   .events-carousel-controls {
-    display: flex;
-    width: 100%;
-    justify-content: flex-start;
+    display: none;
   }
   .carousel-nav {
     width: 40px;
     height: 40px;
   }
   .events-carousel-track {
-    grid-auto-columns: minmax(260px, 84vw);
+    grid-auto-flow: row;
+    grid-auto-columns: unset;
+    grid-template-columns: 1fr;
     gap: 14px;
+    overflow-x: hidden;
+    scroll-snap-type: none;
+    padding-inline: 0;
+    padding-bottom: 0;
+    width: 100%;
+    min-width: 0;
+    justify-items: stretch;
+    touch-action: pan-y;
   }
   .home-live-banner {
     padding-inline: 20px;
   }
   .event-card {
     padding: 20px;
+    width: 100%;
+    min-width: 0;
+  }
+  .department-stack {
+    gap: 48px !important;
+  }
+  .department-row {
+    grid-template-columns: 1fr !important;
+    gap: 22px !important;
+  }
+  .department-row > div {
+    order: initial !important;
+  }
+  .department-visual {
+    padding: 28px !important;
+    min-height: auto !important;
+  }
+  .department-visual .heading-lg,
+  .department-visual p {
+    word-break: break-word;
+  }
+  .department-row ul {
+    margin-bottom: 20px !important;
+  }
+  .department-row li {
+    font-size: 13px !important;
+    line-height: 1.55 !important;
   }
   .about-stats-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
