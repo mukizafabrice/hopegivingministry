@@ -157,16 +157,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const startAutoScroll = () => {
       if (reduceMotion || rafId !== null) return;
-      const speed = Number(section.dataset.carouselSpeed || 22);
+      if (!track.dataset.loopReady) {
+        const originals = Array.from(track.children);
+        originals.forEach(item => {
+          const clone = item.cloneNode(true);
+          clone.setAttribute('aria-hidden', 'true');
+          clone.querySelectorAll('a, button, input, select, textarea, [tabindex]').forEach(el => {
+            if (el.tagName === 'A' || el.tagName === 'BUTTON' || el.matches('input, select, textarea')) {
+              el.setAttribute('tabindex', '-1');
+            } else {
+              el.setAttribute('tabindex', '-1');
+            }
+          });
+          track.appendChild(clone);
+        });
+        track.dataset.loopReady = '1';
+      }
+      const speed = Number(section.dataset.carouselSpeed || 30);
       const tick = (ts) => {
         if (!lastTs) lastTs = ts;
         const delta = ts - lastTs;
         lastTs = ts;
         if (!paused && track.scrollWidth > track.clientWidth + 2) {
           track.scrollLeft += (speed * delta) / 1000;
-          const maxScroll = track.scrollWidth - track.clientWidth;
-          if (track.scrollLeft >= maxScroll - 2) {
-            track.scrollLeft = 0;
+          const loopPoint = track.scrollWidth / 2;
+          if (track.scrollLeft >= loopPoint) {
+            track.scrollLeft -= loopPoint;
           }
         }
         rafId = requestAnimationFrame(tick);
@@ -190,13 +206,9 @@ document.addEventListener('DOMContentLoaded', () => {
       resumeTimer = setTimeout(resume, 1800);
     };
 
-    section.addEventListener('pointerenter', pause);
-    section.addEventListener('pointerleave', resume);
-    section.addEventListener('focusin', pause);
-    section.addEventListener('focusout', resume);
-    track.addEventListener('touchstart', nudgeResume, { passive: true });
-    track.addEventListener('touchend', resume, { passive: true });
-    track.addEventListener('touchcancel', resume, { passive: true });
+    track.addEventListener('pointerdown', nudgeResume, { passive: true });
+    track.addEventListener('pointerup', resume, { passive: true });
+    track.addEventListener('pointercancel', resume, { passive: true });
     track.addEventListener('wheel', nudgeResume, { passive: true });
     startAutoScroll();
 

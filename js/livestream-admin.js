@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const defaultState = { enabled: false, url: '', updatedAt: 0 };
   const ADMIN_USER = 'admin';
   const ADMIN_PASSWORDS = new Set(['admin', 'hope2026', 'Hope2026']);
+  const API_URL = '../api/live-stream.php';
 
   const modal = document.getElementById('admin-modal');
   const trigger = document.getElementById('admin-trigger');
@@ -24,19 +25,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const isAdminSignedIn = () => sessionStorage.getItem('hgmAdmin') === '1';
 
-  const downloadStateFile = (state) => {
-    const json = `${JSON.stringify(state, null, 2)}\n`;
-    const blob = new Blob([json], { type: 'application/json' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'live.json';
-    link.click();
-    setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+  const apiRequest = async (action, payload = {}) => {
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ action, ...payload })
+    });
+
+    let data = {};
+    try {
+      data = await response.json();
+    } catch {
+      data = {};
+    }
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Unable to update live stream.');
+    }
+
+    return data;
   };
 
   const loadState = async () => {
     try {
-      const response = await fetch(`../js/live.json?t=${Date.now()}`, { cache: 'no-store' });
+      const response = await fetch(`${API_URL}?t=${Date.now()}`, { cache: 'no-store', credentials: 'same-origin' });
       if (!response.ok) throw new Error('Live state unavailable.');
       return { ...defaultState, ...(await response.json()) };
     } catch {
@@ -184,6 +199,10 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const valid = usernameInput.value.trim().toLowerCase() === ADMIN_USER && ADMIN_PASSWORDS.has(passwordInput.value);
       if (!valid) throw new Error('Invalid username or password.');
+      await apiRequest('login', {
+        username: usernameInput.value.trim(),
+        password: passwordInput.value
+      });
       sessionStorage.setItem('hgmAdmin', '1');
       passwordInput.value = '';
       showManage();
@@ -220,13 +239,17 @@ document.addEventListener('DOMContentLoaded', () => {
     setBusy(saveBtn, true);
 
     try {
-      downloadStateFile({
+      const result = await apiRequest('save', {
         enabled: liveToggle.checked,
         url,
         updatedAt: Date.now()
       });
-      showStatus('Updated live.json downloaded. Replace js/live.json on the site so every visitor sees it.', 'ok');
+      sessionStorage.setItem('hgmAdmin', '1');
+      showStatus('Live stream updated and saved to js/live.json.', 'ok');
       await updateLiveView();
+      if (result.state) {
+        syncAdminFields(result.state);
+      }
     } catch (error) {
       showStatus(error.message, 'error');
     } finally {
@@ -235,10 +258,16 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   logoutBtn?.addEventListener('click', async () => {
-    sessionStorage.removeItem('hgmAdmin');
-    passwordInput.value = '';
-    showLogin();
-    showStatus('Logged out.', 'ok');
+    try {
+      await apiRequest('logout');
+    } catch {
+      // If the session is already gone, we still clear the client state.
+    } finally {
+      sessionStorage.removeItem('hgmAdmin');
+      passwordInput.value = '';
+      showLogin();
+      showStatus('Logged out.', 'ok');
+    }
   });
 
   reminderBtn?.addEventListener('click', () => {
