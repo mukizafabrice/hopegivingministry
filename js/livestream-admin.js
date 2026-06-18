@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const defaultState = { enabled: false, url: '', updatedAt: 0 };
   const ADMIN_USER = 'admin';
   const ADMIN_PASSWORDS = new Set(['admin', 'hope2026', 'Hope2026']);
-  const API_URL = '../api/live-stream.php';
+  const LIVE_JSON_PATH = '../js/live.json';
 
   const modal = document.getElementById('admin-modal');
   const trigger = document.getElementById('admin-trigger');
@@ -19,39 +19,74 @@ document.addEventListener('DOMContentLoaded', () => {
   const statusMsg = document.getElementById('admin-status-msg');
   const saveBtn = document.getElementById('admin-save-btn');
   const logoutBtn = document.getElementById('admin-logout-btn');
+  const connectBtn = document.getElementById('admin-connect-btn');
   const offlineView = document.getElementById('stream-offline-view');
   const liveView = document.getElementById('stream-live-view');
   const reminderBtn = document.getElementById('reminder-btn');
 
   const isAdminSignedIn = () => sessionStorage.getItem('hgmAdmin') === '1';
 
-  const apiRequest = async (action, payload = {}) => {
-    const response = await fetch(API_URL, {
-      method: 'POST',
-      credentials: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ action, ...payload })
+  const supportsFilePicker = () =>
+    typeof window.showOpenFilePicker === 'function' &&
+    typeof window.FileSystemWritableFileStream === 'function';
+
+  const openHandleDb = () => new Promise((resolve, reject) => {
+    const request = indexedDB.open('hgm-live-json', 1);
+    request.onupgradeneeded = () => {
+      request.result.createObjectStore('handles');
+    };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+
+  const setStoredHandle = async (handle) => {
+    const db = await openHandleDb();
+    await new Promise((resolve, reject) => {
+      const tx = db.transaction('handles', 'readwrite');
+      tx.objectStore('handles').put(handle, 'live-json');
+      tx.oncomplete = resolve;
+      tx.onerror = () => reject(tx.error);
     });
-
-    let data = {};
-    try {
-      data = await response.json();
-    } catch {
-      data = {};
-    }
-
-    if (!response.ok) {
-      throw new Error(data.message || 'Unable to update live stream.');
-    }
-
-    return data;
+    db.close();
   };
+
+  const getStoredHandle = async () => {
+    try {
+      const db = await openHandleDb();
+      const handle = await new Promise((resolve, reject) => {
+        const tx = db.transaction('handles', 'readonly');
+        const request = tx.objectStore('handles').get('live-json');
+        request.onsuccess = () => resolve(request.result || null);
+        request.onerror = () => reject(request.error);
+      });
+      db.close();
+      return handle;
+    } catch {
+      return null;
+    }
+  };
+
+  const readJsonFromHandle = async (handle) => {
+    const file = await handle.getFile();
+    const text = await file.text();
+    return JSON.parse(text);
+  };
+
+  const writeJsonToHandle = async (handle, state) => {
+    const writable = await handle.createWritable();
+    await writable.write(`${JSON.stringify(state, null, 2)}\n`);
+    await writable.close();
+  };
+
+  let liveJsonHandle = null;
 
   const loadState = async () => {
     try {
-      const response = await fetch(`${API_URL}?t=${Date.now()}`, { cache: 'no-store', credentials: 'same-origin' });
+      if (liveJsonHandle) {
+        return { ...defaultState, ...(await readJsonFromHandle(liveJsonHandle)) };
+      }
+
+      const response = await fetch(`${LIVE_JSON_PATH}?t=${Date.now()}`, { cache: 'no-store' });
       if (!response.ok) throw new Error('Live state unavailable.');
       return { ...defaultState, ...(await response.json()) };
     } catch {
@@ -124,6 +159,27 @@ document.addEventListener('DOMContentLoaded', () => {
   const syncAdminFields = (state) => {
     if (liveToggle) liveToggle.checked = Boolean(state.enabled);
     if (urlInput) urlInput.value = state.url || '';
+  };
+
+  const connectLiveJson = async () => {
+    if (!supportsFilePicker()) {
+      throw new Error('This browser cannot write files directly. Use Chrome or Edge over http(s).');
+    }
+
+    const [handle] = await window.showOpenFilePicker({
+      multiple: false,
+      types: [
+        {
+          description: 'JSON file',
+          accept: { 'application/json': ['.json'] }
+        }
+      ]
+    });
+
+    liveJsonHandle = handle;
+    await setStoredHandle(handle);
+    showStatus('live.json connected.', 'ok');
+    await updateLiveView();
   };
 
   const updateLiveView = async () => {
@@ -199,10 +255,6 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const valid = usernameInput.value.trim().toLowerCase() === ADMIN_USER && ADMIN_PASSWORDS.has(passwordInput.value);
       if (!valid) throw new Error('Invalid username or password.');
-      await apiRequest('login', {
-        username: usernameInput.value.trim(),
-        password: passwordInput.value
-      });
       sessionStorage.setItem('hgmAdmin', '1');
       passwordInput.value = '';
       showManage();
@@ -239,17 +291,21 @@ document.addEventListener('DOMContentLoaded', () => {
     setBusy(saveBtn, true);
 
     try {
-      const result = await apiRequest('save', {
+      if (!liveJsonHandle) {
+        await connectLiveJson();
+      }
+
+      if (!liveJsonHandle) throw new Error('Connect js/live.json first.');
+
+      const state = {
         enabled: liveToggle.checked,
         url,
         updatedAt: Date.now()
-      });
-      sessionStorage.setItem('hgmAdmin', '1');
-      showStatus('Live stream updated and saved to js/live.json.', 'ok');
+      };
+
+      await writeJsonToHandle(liveJsonHandle, state);
+      showStatus('Live stream saved to js/live.json.', 'ok');
       await updateLiveView();
-      if (result.state) {
-        syncAdminFields(result.state);
-      }
     } catch (error) {
       showStatus(error.message, 'error');
     } finally {
@@ -258,15 +314,17 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   logoutBtn?.addEventListener('click', async () => {
+    sessionStorage.removeItem('hgmAdmin');
+    passwordInput.value = '';
+    showLogin();
+    showStatus('Logged out.', 'ok');
+  });
+
+  connectBtn?.addEventListener('click', async () => {
     try {
-      await apiRequest('logout');
-    } catch {
-      // If the session is already gone, we still clear the client state.
-    } finally {
-      sessionStorage.removeItem('hgmAdmin');
-      passwordInput.value = '';
-      showLogin();
-      showStatus('Logged out.', 'ok');
+      await connectLiveJson();
+    } catch (error) {
+      showStatus(error.message || 'Could not connect live.json.', 'error');
     }
   });
 
@@ -280,4 +338,12 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(() => {
     if (!document.hidden) updateLiveView();
   }, 30000);
+
+  if (supportsFilePicker()) {
+    getStoredHandle().then(handle => {
+      if (handle) {
+        liveJsonHandle = handle;
+      }
+    });
+  }
 });
