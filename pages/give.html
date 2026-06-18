@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../images/logo.png" type="image/png">
+<link rel="apple-touch-icon" href="../images/logo.png">
+<meta name="description" content="Hope Giving Ministry � Give & Donations">
+<title>Give & Donations � Hope Giving Ministry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/main.css">
+<style>
+.give-card { background:white;border-radius:var(--radius-lg);padding:40px;border:1px solid rgba(0,0,0,0.07);transition:box-shadow 0.3s,transform 0.3s; }
+.give-card:hover { box-shadow:0 16px 48px rgba(0,0,0,0.12);transform:translateY(-4px); }
+.give-card-icon { width:56px;height:56px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:20px; }
+.amount-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px; }
+.amount-btn { border:1px solid rgba(0,0,0,0.12);background:white;border-radius:8px;padding:14px 8px;font-size:16px;font-weight:600;color:var(--navy);cursor:pointer;transition:all 0.2s;font-family:inherit; }
+.amount-btn:hover,.amount-btn.active { background:var(--royal);color:white;border-color:var(--royal); }
+.freq-tabs { display:flex;gap:8px;margin-bottom:24px; }
+.freq-tab { flex:1;padding:10px;border:1px solid rgba(0,0,0,0.1);border-radius:6px;background:white;font-size:13px;font-weight:600;color:#6B7A8F;cursor:pointer;transition:all 0.2s;font-family:inherit; }
+.freq-tab.active { background:var(--navy);color:white;border-color:var(--navy); }
+.payment-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:24px; }
+.payment-option { background:#F8F6F1;border:1px solid rgba(0,0,0,0.08);border-radius:12px;padding:18px; }
+.payment-option strong { display:block;color:var(--navy);font-size:15px;margin-bottom:8px; }
+.payment-code { font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:700;color:var(--royal);line-height:1; }
+.payment-note { font-size:12px;color:#6B7A8F;line-height:1.6;margin-top:8px; }
+.legacy-give-form { display:none; }
+@media (max-width:700px) {
+  .give-layout { grid-template-columns:1fr !important; gap:32px !important; }
+  .payment-grid { grid-template-columns:1fr; }
+  .give-card { padding:26px; }
+}
+</style>
+</head><body><a href="../index.html#main" style="position:absolute;left:-9999px;top:0;background:#C9A84C;color:#0B1F3A;padding:8px 16px;z-index:9999;font-weight:600;border-radius:0 0 6px 6px;" onfocus="this.style.left='0'">Skip to main content</a>
+<nav id="main-nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo" aria-label="Hope Giving Ministry home">
+      <img src="../images/logo.png" alt="" class="nav-logo-img" width="40" height="40">
+      <div class="nav-logo-text">
+        <span class="nav-logo-name">Hope Giving Ministry</span>
+      </div>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="../index.html">Home</a></li>
+      <li class="nav-dropdown">
+        <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">About <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <ul class="nav-dropdown-menu" aria-label="About submenu">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="pastors.html">Meet the Pastors</a></li>
+          <li><a href="../index.html#vision">Vision &amp; Mission</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">Watch <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <ul class="nav-dropdown-menu" aria-label="Watch submenu">
+          <li><a href="sermons.html">Sermons</a></li>
+          <li><a href="livestream.html">Live Stream</a></li>
+          <li><a href="sermons.html#series">Series</a></li>
+        </ul>
+      </li>
+      <li><a href="events.html">Events</a></li>
+      <li class="nav-dropdown">
+        <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">Connect <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <ul class="nav-dropdown-menu" aria-label="Connect submenu">
+          <li><a href="prayer.html">Prayer Requests</a></li>
+          <li><a href="testimonies.html">Testimonies</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">Resources <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <ul class="nav-dropdown-menu" aria-label="Resources submenu">
+          <li><a href="blog.html">Blog &amp; Devotions</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="resources.html">Resources</a></li>
+        </ul>
+      </li>
+      <li><a href="livestream.html" style="display:flex;align-items:center;gap:6px;"><span class="live-badge"><span class="live-dot"></span>Live</span></a></li>
+      <li><a href="give.html" class="nav-cta">Give Now</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobile-nav" role="dialog" aria-label="Mobile navigation" aria-modal="true">
+  <ul class="mobile-nav-links" role="list">
+    <li><a href="../index.html">Home</a></li>
+    <li>
+      <button type="button" class="mobile-dropdown-toggle" aria-expanded="false">About</button>
+      <ul class="mobile-nav-sublinks" aria-hidden="true">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="pastors.html">Meet the Pastors</a></li>
+      </ul>
+    </li>
+    <li>
+      <button type="button" class="mobile-dropdown-toggle" aria-expanded="false">Watch</button>
+      <ul class="mobile-nav-sublinks" aria-hidden="true">
+        <li><a href="sermons.html">Sermons</a></li>
+        <li><a href="livestream.html">Live Stream</a></li>
+      </ul>
+    </li>
+    <li><a href="events.html">Events</a></li>
+    <li>
+      <button type="button" class="mobile-dropdown-toggle" aria-expanded="false">Connect</button>
+      <ul class="mobile-nav-sublinks" aria-hidden="true">
+        <li><a href="prayer.html">Prayer Requests</a></li>
+        <li><a href="testimonies.html">Testimonies</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </li>
+    <li>
+      <button type="button" class="mobile-dropdown-toggle" aria-expanded="false">Ministries</button>
+      <ul class="mobile-nav-sublinks" aria-hidden="true">
+        <li><a href="departments.html">Ministry Departments</a></li>
+        <li><a href="blog.html">Blog &amp; Daily Devotions</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="resources.html">Resources</a></li>
+      </ul>
+    </li>
+  </ul>
+  <a href="give.html" class="mobile-nav-give">Give / Donate</a>
+</div>
+
+<main id="main">
+<section class="page-hero" style="background:linear-gradient(160deg,var(--navy-mid) 0%,var(--royal) 60%,var(--navy) 100%);">
+  <div class="page-hero-content">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span>/</span><span>Give & Donations</span></nav>
+    <h1 class="heading-xl page-hero-title">Partner in the <em class="italic text-gold">Kingdom</em></h1>
+    <p class="page-hero-sub">Every gift you give advances the Gospel, supports lives in need, and builds the Kingdom of God.</p>
+  </div>
+</section>
+
+<!-- Scripture Banner -->
+<div style="background:var(--gold);padding:18px 24px;text-align:center;">
+  <p style="font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:var(--navy);">&ldquo;Each of you should give what you have decided in your heart to give... for God loves a cheerful giver.&rdquo; <strong style="font-style:normal;">� 2 Corinthians 9:7</strong></p>
+</div>
+
+<section class="section section-light">
+  <div class="container" style="max-width:1100px;">
+    <div class="give-layout" style="display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:start;">
+
+      <!-- Give Form -->
+      <div class="reveal-left">
+        <div class="give-card">
+          <div class="label label-dark">Make a Gift</div>
+          <h2 class="heading-lg" style="color:var(--navy);margin-bottom:12px;">Give to Hope Giving Ministry</h2>
+          <p class="body-md" style="color:#3A4A60;">Use any of the giving options below. Include your name or giving purpose as the reference.</p>
+
+          <div class="payment-grid" aria-label="Donation payment options">
+            <div class="payment-option">
+              <strong>MTN MoMo</strong>
+              <div class="payment-code">*182*8*1#</div>
+              <p class="payment-note">MoMo Code: <strong>123456</strong><br>Reference: HGM Offering</p>
+            </div>
+            <div class="payment-option">
+              <strong>Airtel Money</strong>
+              <div class="payment-code">*182#</div>
+              <p class="payment-note">Airtel Code: <strong>123456</strong><br>Reference: HGM Offering</p>
+            </div>
+            <div class="payment-option">
+              <strong>Bank of Kigali</strong>
+              <div class="payment-code">0123456789</div>
+              <p class="payment-note">Account Name: Hope Giving Ministry<br>Swift: BKIGRWRW</p>
+            </div>
+            <div class="payment-option">
+              <strong>Equity Bank</strong>
+              <div class="payment-code">0123456789</div>
+              <p class="payment-note">Account Name: Hope Giving Ministry<br>Branch: Kigali</p>
+            </div>
+          </div>
+
+          <p style="font-size:12px;color:#6B7A8F;margin-top:18px;">For giving support or confirmation, contact <a href="mailto:caleb@gmail.com" style="color:var(--royal);font-weight:600;">caleb@gmail.com</a>.</p>
+
+          <div class="legacy-give-form">
+
+          <div class="freq-tabs" role="group" aria-label="Giving frequency">
+            <button class="freq-tab active" onclick="setFreq(this)">One-Time</button>
+            <button class="freq-tab" onclick="setFreq(this)">Monthly</button>
+            <button class="freq-tab" onclick="setFreq(this)">Annually</button>
+          </div>
+
+          <label style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#6B7A8F;display:block;margin-bottom:10px;">Select Amount</label>
+          <div class="amount-grid" role="group" aria-label="Giving amounts">
+            <button class="amount-btn" onclick="setAmt(this,'500')">KSh 500</button>
+            <button class="amount-btn active" onclick="setAmt(this,'1000')">KSh 1,000</button>
+            <button class="amount-btn" onclick="setAmt(this,'2500')">KSh 2,500</button>
+            <button class="amount-btn" onclick="setAmt(this,'5000')">KSh 5,000</button>
+            <button class="amount-btn" onclick="setAmt(this,'10000')">KSh 10,000</button>
+            <button class="amount-btn" onclick="setAmt(this,'custom')">Custom</button>
+          </div>
+
+          <div id="custom-amount-wrap" style="display:none;margin-bottom:20px;">
+            <label class="form-label form-label-dark" for="custom-amt">Enter Amount (KSh)</label>
+            <input class="form-input form-input-light" type="number" id="custom-amt" placeholder="e.g. 3000" min="50" aria-label="Custom giving amount">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label form-label-dark" for="give-fund">Giving Fund</label>
+            <select class="form-input form-input-light" id="give-fund" aria-label="Select giving fund">
+              <option>General Ministry Fund</option>
+              <option>Missions &amp; Evangelism</option>
+              <option>Building Fund</option>
+              <option>Children's Ministry</option>
+              <option>Welfare &amp; Compassion</option>
+              <option>Tithes</option>
+              <option>Offering</option>
+            </select>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+            <div class="form-group">
+              <label class="form-label form-label-dark" for="give-first">First Name</label>
+              <input class="form-input form-input-light" type="text" id="give-first" placeholder="John" autocomplete="given-name">
+            </div>
+            <div class="form-group">
+              <label class="form-label form-label-dark" for="give-last">Last Name</label>
+              <input class="form-input form-input-light" type="text" id="give-last" placeholder="Mutua" autocomplete="family-name">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label form-label-dark" for="give-email">Email</label>
+            <input class="form-input form-input-light" type="email" id="give-email" placeholder="john@email.com" autocomplete="email">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label form-label-dark" for="give-phone">Phone (M-Pesa)</label>
+            <input class="form-input form-input-light" type="tel" id="give-phone" placeholder="0700 000 000" autocomplete="tel">
+          </div>
+
+          <button onclick="alert('Thank you for your generous gift! You will receive a confirmation shortly.')" class="btn btn-gold btn-lg" style="width:100%;margin-top:8px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            Give Now
+          </button>
+          <p style="font-size:11.5px;color:#9CA3AF;text-align:center;margin-top:14px;">?? Secure &amp; Encrypted � M-Pesa � Bank Transfer � Card</p>
+        </div>
+      </div>
+
+      </div>
+
+      <!-- Side Info -->
+      <div class="reveal-right" style="display:flex;flex-direction:column;gap:24px;">
+        <div>
+          <div class="label label-dark">Why Give?</div>
+          <h3 class="heading-md" style="color:var(--navy);margin-bottom:16px;">Your Gift Changes Lives</h3>
+          <p class="body-md" style="color:#3A4A60;">Every shilling given to Hope Giving Ministry is a seed sown into the Kingdom of God. We steward your generosity with accountability, transparency, and faith.</p>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:14px;">
+
+          <div style="display:flex;gap:16px;align-items:start;background:white;border-radius:var(--radius-md);padding:18px 20px;box-shadow:var(--shadow-sm);">
+            <div style="width:44px;height:44px;border-radius:10px;background:#ECFDF5;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="font-size:20px;">??</span>
+            </div>
+            <div>
+              <p style="font-weight:600;color:var(--navy);font-size:15px;margin-bottom:3px;">Missions & Evangelism</p>
+              <p style="font-size:13px;color:#6B7A8F;line-height:1.6;">Supports our teams reaching the unreached across Kenya and beyond.</p>
+            </div>
+          </div>
+
+
+          <div style="display:flex;gap:16px;align-items:start;background:white;border-radius:var(--radius-md);padding:18px 20px;box-shadow:var(--shadow-sm);">
+            <div style="width:44px;height:44px;border-radius:10px;background:#EEF2FF;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="font-size:20px;">??</span>
+            </div>
+            <div>
+              <p style="font-weight:600;color:var(--navy);font-size:15px;margin-bottom:3px;">Discipleship Programs</p>
+              <p style="font-size:13px;color:#6B7A8F;line-height:1.6;">Funds Bible studies, training, and resources for spiritual growth.</p>
+            </div>
+          </div>
+
+
+          <div style="display:flex;gap:16px;align-items:start;background:white;border-radius:var(--radius-md);padding:18px 20px;box-shadow:var(--shadow-sm);">
+            <div style="width:44px;height:44px;border-radius:10px;background:#FDF2F8;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="font-size:20px;">??</span>
+            </div>
+            <div>
+              <p style="font-weight:600;color:var(--navy);font-size:15px;margin-bottom:3px;">Welfare & Compassion</p>
+              <p style="font-size:13px;color:#6B7A8F;line-height:1.6;">Provides food, support, and care to families in need.</p>
+            </div>
+          </div>
+
+
+          <div style="display:flex;gap:16px;align-items:start;background:white;border-radius:var(--radius-md);padding:18px 20px;box-shadow:var(--shadow-sm);">
+            <div style="width:44px;height:44px;border-radius:10px;background:#FEF3C7;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="font-size:20px;">???</span>
+            </div>
+            <div>
+              <p style="font-weight:600;color:var(--navy);font-size:15px;margin-bottom:3px;">Building God's House</p>
+              <p style="font-size:13px;color:#6B7A8F;line-height:1.6;">Contributes to our facilities and spaces for worship and ministry.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- M-Pesa Paybill -->
+        <div style="background:linear-gradient(135deg,var(--navy-mid),var(--navy));border-radius:var(--radius-lg);padding:28px;text-align:center;border:1px solid rgba(201,168,76,0.2);">
+          <p style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">M-Pesa Paybill</p>
+          <p style="font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:600;color:white;line-height:1;letter-spacing:2px;">123456</p>
+          <p style="font-size:13px;color:var(--text-muted);margin-top:8px;">Account: Your Name � Ref: HOPE</p>
+          <div style="margin-top:16px;height:1px;background:rgba(255,255,255,0.08);"></div>
+          <p style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:14px;">Bank: Equity Bank � A/C: 0123456789</p>
+        </div>
+
+        <!-- Impact Stats -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+
+          <div style="background:white;border-radius:var(--radius-md);padding:20px;text-align:center;box-shadow:var(--shadow-sm);">
+            <p style="font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:var(--navy);line-height:1;">500+</p>
+            <p style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#6B7A8F;margin-top:4px;">Salvations</p>
+          </div>
+
+
+          <div style="background:white;border-radius:var(--radius-md);padding:20px;text-align:center;box-shadow:var(--shadow-sm);">
+            <p style="font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:var(--navy);line-height:1;">12</p>
+            <p style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#6B7A8F;margin-top:4px;">Missions</p>
+          </div>
+
+
+          <div style="background:white;border-radius:var(--radius-md);padding:20px;text-align:center;box-shadow:var(--shadow-sm);">
+            <p style="font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:var(--navy);line-height:1;">3K+</p>
+            <p style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#6B7A8F;margin-top:4px;">Lives Touched</p>
+          </div>
+
+
+          <div style="background:white;border-radius:var(--radius-md);padding:20px;text-align:center;box-shadow:var(--shadow-sm);">
+            <p style="font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:600;color:var(--navy);line-height:1;">100%</p>
+            <p style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#6B7A8F;margin-top:4px;">Accountability</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+function setFreq(btn) {
+  btn.closest('.freq-tabs').querySelectorAll('.freq-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function setAmt(btn, val) {
+  btn.closest('.amount-grid').querySelectorAll('.amount-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('custom-amount-wrap').style.display = val==='custom' ? 'block' : 'none';
+}
+</script>
+</main><footer class="site-footer"><div class="footer-grid"><div><a href="../index.html" class="footer-brand-logo" aria-label="Hope Giving Ministry home"><img src="../images/logo.png" alt="Hope Giving Ministry logo" width="48" height="48"></a><p class="footer-brand-name">Hope Giving Ministry</p><p class="footer-brand-text">Proclaiming the Gospel, restoring hope, and demonstrating God's love through practical ministry.</p></div><div><p class="footer-col-title">Ministry</p><ul class="footer-col-links"><li><a href="about.html">About Us</a></li><li><a href="pastors.html">Leadership</a></li><li><a href="departments.html">Departments</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="resources.html">Resources</a></li></ul></div><div><p class="footer-col-title">Connect</p><ul class="footer-col-links"><li><a href="sermons.html">Sermons</a></li><li><a href="livestream.html">Live Stream</a></li><li><a href="events.html">Events</a></li><li><a href="prayer.html">Prayer</a></li><li><a href="testimonies.html">Testimonies</a></li><li><a href="blog.html">Blog</a></li></ul></div><div><p class="footer-col-title">Contact</p><p style="font-size:13px;color:#9BA8BF;line-height:2;">123 Faith Avenue<br>Kigali, Rwanda<br><a href="mailto:caleb@gmail.com" style="color:#C9A84C;">caleb@gmail.com</a><br><a href="tel:+254700000000" style="color:#C9A84C;">+250 780 000 000</a></p></div></div><div class="footer-divider"></div><div class="footer-bottom"><p class="footer-copy">&copy; 2025 Hope Giving Ministry. All rights reserved.</p><p class="footer-verse">&ldquo;The Lord is my shepherd; I shall not want.&rdquo; &mdash; Psalm 23:1</p></div></footer><script src="../js/main.js"></script></body></html>

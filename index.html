@@ -1,0 +1,2150 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="images/logo.png" type="image/png">
+<link rel="apple-touch-icon" href="images/logo.png">
+<meta name="description" content="Hope Giving Ministry — Proclaiming the Gospel of Jesus Christ, restoring hope, and transforming lives for God's glory.">
+<title>Hope Giving Ministry — Transforming Lives Through Christ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0B1F3A;
+    --navy-light: #132845;
+    --navy-mid: #1A3660;
+    --royal: #1B4B9E;
+    --royal-light: #2563C0;
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --gold-pale: #F5E8C0;
+    --white: #FFFFFF;
+    --off-white: #F8F6F1;
+    --text-light: #E8E4DC;
+    --text-muted: #9BA8BF;
+    --section-gap: clamp(60px, 10vw, 120px);
+    --container: min(100% - 2rem, 1200px);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; font-size: 16px; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--navy);
+    color: var(--white);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  img { max-width: 100%; display: block; }
+  a { text-decoration: none; color: inherit; }
+
+  .container { width: var(--container); margin-inline: auto; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    transition: background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
+    padding: 0;
+    background: linear-gradient(to bottom, rgba(5, 14, 28, 0.78), rgba(5, 14, 28, 0));
+  }
+
+  nav.scrolled {
+    background: rgba(11, 31, 58, 0.96);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 1px 0 rgba(201,168,76,0.15);
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px;
+    max-width: 1300px;
+    margin: auto;
+  }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px; z-index: 1001;
+  }
+
+  .nav-logo-mark {
+    width: 40px; height: 40px;
+    background: transparent;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .nav-logo-img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .footer-brand-logo {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .footer-brand-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  .nav-logo-text {
+    display: flex; flex-direction: column; line-height: 1.1;
+  }
+
+  .nav-logo-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px; font-weight: 700; letter-spacing: 0;
+    color: var(--white);
+  }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 2px;
+    list-style: none;
+  }
+
+  .nav-links > li { position: relative; }
+  .nav-links > li:last-child { z-index: 1003; }
+
+  .nav-links li a,
+  .nav-dropdown-toggle {
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 0.01em;
+    color: rgba(255,255,255,0.82);
+    padding: 10px 10px;
+    transition: color 0.2s;
+    white-space: nowrap;
+    background: none; border: none;
+    display: inline-flex; align-items: center; gap: 6px;
+    cursor: pointer;
+  }
+
+  .nav-links li a:hover,
+  .nav-dropdown-toggle:hover { color: var(--gold-light); }
+  .nav-links li a.active { color: var(--gold); }
+
+  .nav-dropdown-menu {
+    position: absolute; top: 100%; left: 0; z-index: 1002;
+    min-width: 200px;
+    background: rgba(11, 31, 58, 0.98);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 10px;
+    padding: 8px 0;
+    list-style: none;
+    opacity: 0; visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+  }
+
+  .nav-dropdown:hover .nav-dropdown-menu,
+  .nav-dropdown.open .nav-dropdown-menu {
+    opacity: 1; visibility: visible;
+    transform: translateY(0);
+  }
+
+  .nav-dropdown-menu li a {
+    display: block;
+    padding: 10px 18px;
+    font-size: 13px;
+    border-radius: 0;
+  }
+
+  .nav-cta {
+    /* background: var(--gold); */
+    background: var(--gold) !important; 
+    color: var(--navy) !important;
+    padding: 10px 18px !important;
+    border-radius: 6px;
+    font-weight: 600 !important;
+    letter-spacing: 0.06em !important;
+    font-size: 11.5px !important;
+    text-transform: uppercase;
+    transition: background 0.2s, transform 0.15s !important;
+    position: relative;
+    z-index: 1003;
+  }
+
+  .nav-cta:hover { background: var(--gold-light) !important; transform: translateY(-1px); }
+
+  .nav-hamburger {
+    display: none;
+    flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: pointer;
+    padding: 8px; z-index: 1001;
+    width: 44px; height: 44px; align-items: center; justify-content: center;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.08);
+  }
+
+  .nav-hamburger span {
+    display: block; width: 22px; height: 1.5px;
+    background: var(--white);
+    transition: transform 0.3s ease, opacity 0.3s ease, width 0.3s ease;
+    transform-origin: center;
+  }
+
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .mobile-nav {
+    display: none;
+    position: fixed; inset: 0; z-index: 999;
+    background: var(--navy);
+    flex-direction: column;
+    padding: 90px 32px 40px;
+    overflow-y: auto;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+
+  .mobile-nav.open { opacity: 1; pointer-events: all; }
+
+  .mobile-nav-links { list-style: none; }
+
+  .mobile-nav-links li {
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transform: translateY(20px); opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
+
+  .mobile-nav.open .mobile-nav-links li {
+    transform: translateY(0); opacity: 1;
+  }
+
+  .mobile-nav.open .mobile-nav-links > li { transition-delay: 0.05s; }
+  .mobile-nav.open .mobile-nav-links > li:nth-child(2) { transition-delay: 0.1s; }
+  .mobile-nav.open .mobile-nav-links > li:nth-child(3) { transition-delay: 0.15s; }
+  .mobile-nav.open .mobile-nav-links > li:nth-child(4) { transition-delay: 0.2s; }
+  .mobile-nav.open .mobile-nav-links > li:nth-child(5) { transition-delay: 0.25s; }
+  .mobile-nav.open .mobile-nav-links > li:nth-child(6) { transition-delay: 0.3s; }
+  .mobile-nav.open .mobile-nav-links > li:nth-child(7) { transition-delay: 0.35s; }
+  .mobile-nav.open .mobile-nav-links > li:nth-child(8) { transition-delay: 0.4s; }
+
+  .mobile-nav-links > li {
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transform: translateY(20px); opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+  }
+
+  .mobile-nav.open .mobile-nav-links li:nth-child(1) { transition-delay: 0.05s; }
+  .mobile-nav.open .mobile-nav-links li:nth-child(2) { transition-delay: 0.1s; }
+  .mobile-nav.open .mobile-nav-links li:nth-child(3) { transition-delay: 0.15s; }
+  .mobile-nav.open .mobile-nav-links li:nth-child(4) { transition-delay: 0.2s; }
+  .mobile-nav.open .mobile-nav-links li:nth-child(5) { transition-delay: 0.25s; }
+  .mobile-nav.open .mobile-nav-links li:nth-child(6) { transition-delay: 0.3s; }
+  .mobile-nav.open .mobile-nav-links li:nth-child(7) { transition-delay: 0.35s; }
+  .mobile-nav.open .mobile-nav-links li:nth-child(8) { transition-delay: 0.38s; }
+  .mobile-nav.open .mobile-nav-links li:nth-child(9) { transition-delay: 0.41s; }
+  .mobile-nav.open .mobile-nav-links li:nth-child(10) { transition-delay: 0.44s; }
+  .mobile-nav.open .mobile-nav-links li:nth-child(11) { transition-delay: 0.47s; }
+
+  .mobile-nav-links li a {
+    display: block; padding: 16px 0;
+    font-size: 17px; font-weight: 400;
+    color: rgba(255,255,255,0.8);
+    transition: color 0.2s;
+  }
+
+  .mobile-nav-sublinks {
+    list-style: none;
+    padding-left: 16px;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.35s ease;
+  }
+
+  .mobile-nav-sublinks.open { max-height: 300px; }
+
+  .mobile-nav-sublinks li a {
+    font-size: 15px;
+    padding: 12px 0;
+    color: rgba(255,255,255,0.65);
+  }
+
+  .mobile-dropdown-toggle {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 0;
+    font-size: 17px; font-weight: 400;
+    color: rgba(255,255,255,0.8);
+    background: none; border: none;
+    cursor: pointer; width: 100%;
+    text-align: left;
+  }
+
+  .mobile-dropdown-toggle::after {
+    content: '+';
+    font-size: 20px; font-weight: 300;
+    color: var(--gold); line-height: 1;
+  }
+
+  .mobile-dropdown-toggle.open::after { content: '−'; }
+
+  .mobile-nav-links a:hover { color: var(--gold); }
+
+  .mobile-nav-give {
+    margin-top: 32px;
+    display: block;
+    background: var(--gold);
+    color: var(--navy) !important;
+    text-align: center;
+    padding: 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    font-size: 13px;
+    text-transform: uppercase;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100svh;
+    display: flex; flex-direction: column;
+    align-items: flex-start; justify-content: flex-end;
+    position: relative;
+    overflow: hidden;
+    padding: clamp(110px, 16vh, 150px) 24px 92px;
+    text-align: left;
+    isolation: isolate;
+    background: #08182D;
+  }
+
+  .hero-media {
+    position: absolute; inset: 0; z-index: -3;
+    overflow: hidden;
+  }
+
+  .hero-media img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center 42%;
+    filter: saturate(0.95) contrast(1.03);
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0; z-index: -2;
+    background:
+      linear-gradient(90deg, rgba(5,14,28,0.84) 0%, rgba(5,14,28,0.62) 42%, rgba(5,14,28,0.28) 72%, rgba(5,14,28,0.64) 100%),
+      linear-gradient(180deg, rgba(5,14,28,0.22) 0%, rgba(5,14,28,0.08) 42%, rgba(5,14,28,0.76) 100%);
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute; inset: auto 0 0; z-index: -1;
+    height: 28%;
+    background: linear-gradient(to bottom, transparent, var(--navy));
+  }
+
+  .hero-canvas,
+  #hero-canvas { display: none; }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    width: min(100%, 760px);
+    margin-left: max(0px, calc((100vw - 1180px) / 2));
+  }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 11px; font-weight: 700;
+    color: var(--gold-light);
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding: 7px 12px;
+    border: 1px solid rgba(232,201,122,0.35);
+    border-radius: 999px;
+    background: rgba(11,31,58,0.52);
+    backdrop-filter: blur(12px);
+    opacity: 0; animation: fadeUp 0.8s ease 0.3s forwards;
+  }
+
+  .hero-eyebrow span { 
+    display: inline-block;
+    width: 4px; height: 4px; 
+    background: var(--gold); 
+    border-radius: 50%; 
+    margin: 0; 
+    vertical-align: middle;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 8vw, 92px);
+    font-weight: 500;
+    line-height: 0.98;
+    letter-spacing: 0;
+    color: var(--white);
+    margin-bottom: 22px;
+    max-width: 760px;
+    text-wrap: balance;
+    opacity: 0; animation: fadeUp 0.9s ease 0.5s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-verse {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: clamp(16px, 2vw, 20px);
+    font-weight: 400; font-style: normal;
+    color: rgba(255,255,255,0.84);
+    line-height: 1.75;
+    margin-bottom: 30px;
+    max-width: 620px;
+    opacity: 0; animation: fadeUp 0.9s ease 0.7s forwards;
+  }
+
+  .hero-actions {
+    display: flex; align-items: center; justify-content: flex-start;
+    gap: 12px; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.9s ease 0.9s forwards;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--navy);
+    padding: 14px 24px;
+    border-radius: 6px;
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    transition: background 0.2s, transform 0.15s;
+    min-height: 48px; display: inline-flex; align-items: center; gap: 8px;
+  }
+
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  .btn-outline {
+    border: 1px solid rgba(255,255,255,0.3);
+    color: var(--white);
+    padding: 14px 24px;
+    border-radius: 6px;
+    font-size: 13px; font-weight: 500;
+    letter-spacing: 0.06em;
+    transition: border-color 0.2s, background 0.2s;
+    min-height: 48px; display: inline-flex; align-items: center; gap: 8px;
+    backdrop-filter: blur(4px);
+  }
+
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-scroll {
+    position: absolute; bottom: 32px; right: 32px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    opacity: 0; animation: fadeIn 1s ease 1.4s forwards;
+    color: var(--text-muted);
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, transparent, var(--gold));
+    animation: scrollLine 1.8s ease-in-out infinite;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* ── SECTION LABELS ── */
+  .section-label {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 10.5px; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 18px;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block; width: 24px; height: 1px;
+    background: var(--gold);
+  }
+
+  /* ── WELCOME ── */
+  .welcome {
+    background: var(--off-white);
+    color: var(--navy);
+    padding: var(--section-gap) 24px;
+  }
+
+  .welcome-inner {
+    max-width: 1100px; margin: auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    align-items: center;
+  }
+
+  .welcome .section-label { color: var(--royal); }
+  .welcome .section-label::before { background: var(--royal); }
+
+  .welcome-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 500; line-height: 1.15;
+    color: var(--navy);
+    margin-bottom: 24px;
+  }
+
+  .welcome-heading span { color: var(--royal); font-style: italic; }
+
+  .welcome-body {
+    font-size: 16px; color: #3A4A60;
+    line-height: 1.8; margin-bottom: 20px;
+  }
+
+  .welcome-stats {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: rgba(0,0,0,0.08);
+    border-radius: 10px; overflow: hidden;
+    margin-top: 36px;
+  }
+
+  .stat-box {
+    background: white; padding: 24px 20px; text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px; font-weight: 600;
+    color: var(--navy); line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-size: 11px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: #6B7A8F;
+  }
+
+  .welcome-visual {
+    position: relative;
+  }
+
+  .welcome-cross-container {
+    position: relative; width: 100%; aspect-ratio: 1;
+    max-width: 420px; margin: auto;
+  }
+
+  .cross-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--royal) 100%);
+    border-radius: 20px; overflow: hidden;
+  }
+
+  .cross-glow {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .cross-svg {
+    width: 100%; height: 100%;
+    object-fit: contain;
+    opacity: 0.9;
+    filter: drop-shadow(0 0 40px rgba(201,168,76,0.5));
+  }
+
+  .cross-ring {
+    position: absolute;
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 50%;
+    width: 60%; height: 60%;
+  }
+
+  .cross-ring:nth-child(2) { width: 80%; height: 80%; }
+  .cross-ring:nth-child(3) { width: 95%; height: 95%; }
+
+  @keyframes pulse-ring {
+    0%, 100% { opacity: 0.3; transform: scale(0.97); }
+    50% { opacity: 0.8; transform: scale(1); }
+  }
+
+  .welcome-quote {
+    position: absolute; bottom: -20px; right: -20px;
+    background: var(--gold);
+    color: var(--navy);
+    padding: 20px 24px;
+    border-radius: 12px;
+    max-width: 200px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px; font-style: italic;
+    font-weight: 600; line-height: 1.5;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+
+  /* ── VISION & MISSION ── */
+  .vision {
+    background: var(--navy);
+    padding: var(--section-gap) 24px;
+  }
+
+  .vision-header { text-align: center; margin-bottom: 64px; }
+
+  .vision-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 5vw, 54px);
+    font-weight: 300; color: var(--white);
+    line-height: 1.2; margin-bottom: 20px;
+  }
+
+  .vision-title strong { font-weight: 600; color: var(--gold); }
+
+  .vision-sub {
+    font-size: 16px; color: var(--text-muted);
+    max-width: 540px; margin: auto;
+  }
+
+  .vision-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 1100px; margin: auto;
+  }
+
+  .vision-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 28px 26px;
+    transition: border-color 0.3s, background 0.3s, transform 0.3s;
+    position: relative; overflow: hidden;
+  }
+
+  .vision-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+
+  .vision-card:hover {
+    border-color: rgba(201,168,76,0.25);
+    background: rgba(255,255,255,0.06);
+    transform: translateY(-4px);
+  }
+
+  .vision-card:hover::before { opacity: 1; }
+
+  .vision-card-icon {
+    width: 44px; height: 44px; margin-bottom: 18px;
+    background: rgba(201,168,76,0.1);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .vision-card-icon svg { width: 22px; height: 22px; }
+
+  .vision-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 600; color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .vision-card-text {
+    font-size: 14px; color: var(--text-muted); line-height: 1.7;
+  }
+
+  .mission-banner {
+    max-width: 1100px; margin: 60px auto 0;
+    background: linear-gradient(135deg, var(--royal) 0%, var(--navy-mid) 100%);
+    border-radius: 20px; padding: 48px;
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 32px; align-items: center;
+    border: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .mission-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(20px, 3vw, 26px);
+    font-weight: 400; font-style: italic;
+    color: var(--white); line-height: 1.5;
+  }
+
+  .mission-text strong { font-style: normal; font-weight: 600; color: var(--gold-light); }
+
+  /* ── SERMONS ── */
+  .sermons {
+    background: var(--off-white);
+    color: var(--navy);
+    padding: var(--section-gap) 24px;
+  }
+
+  .sermons .section-label { color: var(--royal); }
+  .sermons .section-label::before { background: var(--royal); }
+
+  .section-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 48px; gap: 20px; flex-wrap: wrap;
+  }
+
+  .section-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 4.5vw, 44px);
+    font-weight: 500; color: var(--navy);
+    line-height: 1.15;
+  }
+
+  .sermons .section-heading { color: var(--navy); }
+
+  .view-all {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--royal);
+    display: flex; align-items: center; gap: 6px;
+    white-space: nowrap;
+    transition: gap 0.2s;
+  }
+
+  .view-all:hover { gap: 10px; }
+
+  .sermons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    max-width: 1100px; margin: auto;
+  }
+
+  .sermon-card {
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .sermon-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(0,0,0,0.12); }
+
+  .sermon-thumb {
+    height: 180px;
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .sermon-play {
+    width: 56px; height: 56px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s, background 0.2s;
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .sermon-card:hover .sermon-play { transform: scale(1.12); background: var(--gold); }
+
+  .sermon-play svg { margin-left: 3px; width: 20px; height: 20px; }
+  .sermon-card:hover .sermon-play svg path { fill: var(--navy); }
+
+  .sermon-body { padding: 22px 22px 24px; }
+
+  .sermon-series {
+    font-size: 10.5px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--royal);
+    margin-bottom: 8px;
+  }
+
+  .sermon-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 600; color: var(--navy);
+    line-height: 1.3; margin-bottom: 10px;
+  }
+
+  .sermon-meta {
+    display: flex; align-items: center; gap: 14px;
+    font-size: 12px; color: #6B7A8F;
+  }
+
+  /* ── EVENTS ── */
+  .events {
+    background: var(--navy-light);
+    padding: var(--section-gap) 24px;
+  }
+
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 1100px; margin: auto;
+  }
+
+  .event-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: 26px;
+    transition: border-color 0.3s, transform 0.3s;
+    display: flex; gap: 20px;
+  }
+
+  .event-card:hover {
+    border-color: rgba(201,168,76,0.3);
+    transform: translateY(-4px);
+  }
+
+  .event-date {
+    flex-shrink: 0;
+    text-align: center;
+    background: rgba(201,168,76,0.1);
+    border-radius: 10px;
+    padding: 12px 16px;
+    border: 1px solid rgba(201,168,76,0.2);
+  }
+
+  .event-day {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px; font-weight: 600; color: var(--gold);
+    line-height: 1;
+  }
+
+  .event-month {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .event-info { flex: 1; }
+
+  .event-type {
+    font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 6px;
+  }
+
+  .event-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-weight: 600; color: var(--white);
+    margin-bottom: 8px; line-height: 1.3;
+  }
+
+  .event-detail {
+    font-size: 13px; color: var(--text-muted);
+    display: flex; align-items: center; gap: 5px;
+  }
+
+  /* ── PRAYER & TESTIMONIES ── */
+  .prayer {
+    background: var(--navy);
+    padding: var(--section-gap) 24px;
+  }
+
+  .prayer-inner {
+    max-width: 1100px; margin: auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+  }
+
+  .prayer-block {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px; padding: 40px;
+  }
+
+  .prayer-block-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 500; color: var(--white);
+    margin-bottom: 14px; margin-top: 16px;
+  }
+
+  .prayer-block-text {
+    font-size: 14px; color: var(--text-muted); line-height: 1.8;
+    margin-bottom: 28px;
+  }
+
+  .testimonial-card {
+    background: rgba(255,255,255,0.04);
+    border-radius: 14px; padding: 24px;
+    margin-bottom: 16px;
+    border-left: 2px solid var(--gold);
+  }
+
+  .testimonial-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px; font-style: italic; color: var(--text-light);
+    line-height: 1.6; margin-bottom: 14px;
+  }
+
+  .testimonial-author {
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .author-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--royal), var(--navy-mid));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 600; color: var(--white);
+    flex-shrink: 0;
+  }
+
+  .author-name { font-size: 13px; font-weight: 500; color: var(--white); }
+  .author-loc { font-size: 11px; color: var(--text-muted); }
+
+  /* ── DEPARTMENTS ── */
+  .departments {
+    background: var(--off-white);
+    color: var(--navy);
+    padding: var(--section-gap) 24px;
+  }
+
+  .departments .section-label { color: var(--royal); }
+  .departments .section-label::before { background: var(--royal); }
+
+  .dept-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+    max-width: 1100px; margin: auto;
+  }
+
+  .dept-card {
+    background: white;
+    border-radius: 16px; padding: 28px 20px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    border: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .dept-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+  }
+
+  .dept-icon {
+    width: 56px; height: 56px; margin: 0 auto 16px;
+    border-radius: 14px; display: flex; align-items: center; justify-content: center;
+  }
+
+  .dept-icon svg { width: 28px; height: 28px; }
+
+  .dept-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px; font-weight: 600; color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .dept-sub { font-size: 12px; color: #6B7A8F; }
+
+  /* ── GIVING ── */
+  .giving {
+    background: linear-gradient(135deg, var(--navy-mid) 0%, var(--royal) 50%, var(--navy-mid) 100%);
+    padding: var(--section-gap) 24px;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+
+  .giving::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .giving-inner { position: relative; z-index: 1; max-width: 700px; margin: auto; }
+
+  .giving-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 5.5vw, 56px);
+    font-weight: 300; color: var(--white); line-height: 1.15;
+    margin-bottom: 20px;
+  }
+
+  .giving-title strong { font-weight: 600; color: var(--gold-light); }
+
+  .giving-verse {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-style: italic;
+    color: rgba(255,255,255,0.7); margin-bottom: 14px;
+  }
+
+  .giving-ref {
+    font-size: 12px; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 40px;
+  }
+
+  .giving-impacts {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: rgba(255,255,255,0.1);
+    border-radius: 12px; overflow: hidden; margin-top: 48px;
+  }
+
+  .impact-box {
+    background: rgba(255,255,255,0.06); padding: 24px 16px; text-align: center;
+  }
+
+  .impact-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px; font-weight: 600; color: var(--gold);
+    line-height: 1; margin-bottom: 6px;
+  }
+
+  .impact-label { font-size: 12px; color: rgba(255,255,255,0.6); }
+
+  /* ── DEVOTIONAL ── */
+  .devotional {
+    background: var(--navy);
+    padding: var(--section-gap) 24px;
+  }
+
+  .devotional-inner {
+    max-width: 1100px; margin: auto;
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 60px;
+    align-items: start;
+  }
+
+  .devotional-featured {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px; overflow: hidden;
+  }
+
+  .devotional-thumb {
+    height: 220px;
+    background: linear-gradient(135deg, var(--royal) 0%, var(--navy-mid) 100%);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+
+  .devotional-thumb-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 60px; color: rgba(255,255,255,0.08);
+    font-weight: 700; letter-spacing: -4px;
+    position: absolute; line-height: 1;
+    user-select: none;
+  }
+
+  .devotional-thumb-verse {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-style: italic;
+    color: rgba(255,255,255,0.9); text-align: center;
+    padding: 24px; line-height: 1.6; z-index: 1;
+  }
+
+  .devotional-content { padding: 28px; }
+
+  .devotional-date {
+    font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 12px;
+  }
+
+  .devotional-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px; font-weight: 600; color: var(--white);
+    margin-bottom: 12px; line-height: 1.3;
+  }
+
+  .devotional-excerpt {
+    font-size: 14px; color: var(--text-muted); line-height: 1.8;
+    margin-bottom: 20px;
+  }
+
+  .devotional-sidebar-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 500; color: var(--white);
+    margin-bottom: 24px;
+  }
+
+  .sidebar-post {
+    display: flex; gap: 16px; padding: 16px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .sidebar-post:last-child { border-bottom: none; }
+
+  .sidebar-post-date {
+    flex-shrink: 0; text-align: center;
+    font-size: 11px; color: var(--text-muted);
+    line-height: 1.3; min-width: 36px;
+  }
+
+  .sidebar-post-date strong {
+    display: block; font-family: 'Cormorant Garamond', serif;
+    font-size: 24px; color: var(--gold); font-weight: 600;
+    line-height: 1;
+  }
+
+  .sidebar-post-title {
+    font-size: 14px; color: var(--text-light); line-height: 1.5;
+    transition: color 0.2s;
+  }
+
+  .sidebar-post:hover .sidebar-post-title { color: var(--gold-light); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #060E1C;
+    padding: 80px 24px 40px;
+    border-top: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .footer-inner {
+    max-width: 1100px; margin: auto;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1.5fr repeat(3, 1fr);
+    gap: 48px; margin-bottom: 60px;
+  }
+
+  .footer-brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 600; color: var(--white);
+    margin-top: 14px; margin-bottom: 14px;
+  }
+
+  .footer-brand-text {
+    font-size: 13px; color: var(--text-muted); line-height: 1.8;
+    margin-bottom: 24px;
+  }
+
+  .footer-socials {
+    display: flex; gap: 10px;
+  }
+
+  .social-btn {
+    width: 38px; height: 38px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+
+  .social-btn:hover { background: rgba(201,168,76,0.2); }
+  .social-btn svg { width: 16px; height: 16px; }
+
+  .footer-col-title {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 20px;
+  }
+
+  .footer-links { list-style: none; }
+
+  .footer-links li {
+    margin-bottom: 10px;
+  }
+
+  .footer-links a {
+    font-size: 13.5px; color: var(--text-muted);
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--white); }
+
+  .footer-divider {
+    height: 1px; background: rgba(255,255,255,0.06);
+    margin-bottom: 32px;
+  }
+
+  .footer-bottom {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+
+  .footer-copy {
+    font-size: 12.5px; color: var(--text-muted);
+  }
+
+  .footer-verse {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px; font-style: italic; color: rgba(255,255,255,0.35);
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ── LIVE STREAM BADGE ── */
+  .live-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #DC2626; color: white;
+    padding: 5px 12px; border-radius: 100px;
+    font-size: 10.5px; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .live-dot {
+    width: 6px; height: 6px; background: white; border-radius: 50%;
+    animation: live-pulse 1.5s ease infinite;
+  }
+
+  @keyframes live-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .nav-inner { padding: 12px 18px; }
+    .nav-logo-name { font-size: 18px; }
+    .hero {
+      min-height: 100svh;
+      padding: 104px 20px 72px;
+      justify-content: flex-end;
+    }
+    .hero-content { margin-left: 0; }
+    .hero-media img { object-position: 57% center; }
+    .hero::before {
+      background:
+        linear-gradient(180deg, rgba(5,14,28,0.42) 0%, rgba(5,14,28,0.6) 45%, rgba(5,14,28,0.9) 100%),
+        linear-gradient(90deg, rgba(5,14,28,0.72) 0%, rgba(5,14,28,0.34) 100%);
+    }
+    .hero-scroll { display: none; }
+    .welcome-inner { grid-template-columns: 1fr; gap: 48px; }
+    .welcome-cross-container { max-width: 300px; }
+    .welcome-quote { position: static; margin-top: 16px; }
+    .prayer-inner { grid-template-columns: 1fr; }
+    .devotional-inner { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .mission-banner { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 700px) {
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+    .mobile-nav { display: flex; }
+    .nav-logo-mark { width: 36px; height: 36px; border-radius: 7px; }
+    .nav-logo-name { font-size: 17px; }
+    .hero-title { font-size: clamp(45px, 14vw, 62px); }
+    .hero-verse { font-size: 16px; line-height: 1.65; }
+    .hero-actions { display: grid; grid-template-columns: 1fr; width: 100%; }
+    .hero-actions a { justify-content: center; width: 100%; }
+    .welcome-stats { grid-template-columns: repeat(3, 1fr); }
+    .footer-top { grid-template-columns: 1fr; }
+    .section-header { align-items: flex-start; }
+    .view-all { white-space: normal; text-align: right; }
+    .sermons-grid { grid-template-columns: 1fr; }
+    .sermon-meta { flex-wrap: wrap; row-gap: 4px; }
+    .giving-impacts { grid-template-columns: repeat(3, 1fr); }
+    .dept-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 400px) {
+    .nav-inner { padding-inline: 14px; }
+    .hero { padding-inline: 16px; }
+    .hero-title { font-size: 43px; }
+    .giving-impacts { grid-template-columns: 1fr; }
+    .welcome-stats { grid-template-columns: 1fr; gap: 1px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Skip to main content -->
+<a href="#main" style="position:absolute;left:-9999px;top:0;background:var(--gold);color:var(--navy);padding:8px 16px;z-index:9999;font-weight:600;border-radius:0 0 6px 6px;" onfocus="this.style.left='0'">Skip to main content</a>
+
+<!-- ── NAVIGATION ── -->
+<nav id="main-nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="Hope Giving Ministry home">
+      <img src="images/logo.png" alt="" class="nav-logo-img" width="40" height="40">
+      <div class="nav-logo-text">
+        <span class="nav-logo-name">Hope Giving Ministry</span>
+      </div>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html" class="active" aria-current="page">Home</a></li>
+
+      <li class="nav-dropdown">
+        <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">About <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <ul class="nav-dropdown-menu" aria-label="About submenu">
+          <li><a href="pages/about.html">About Us</a></li>
+          <li><a href="pages/pastors.html">Meet the Pastors</a></li>
+          <li><a href="#vision">Vision &amp; Mission</a></li>
+        </ul>
+      </li>
+
+      <li class="nav-dropdown">
+        <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">Watch <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <ul class="nav-dropdown-menu" aria-label="Watch submenu">
+          <li><a href="pages/sermons.html">Sermons</a></li>
+          <li><a href="pages/livestream.html">Live Stream</a></li>
+          <li><a href="pages/sermons.html#series">Series</a></li>
+        </ul>
+      </li>
+
+      <li><a href="pages/events.html">Events</a></li>
+
+      <li class="nav-dropdown">
+        <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">Connect <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <ul class="nav-dropdown-menu" aria-label="Connect submenu">
+          <li><a href="pages/prayer.html">Prayer Requests</a></li>
+          <li><a href="pages/testimonies.html">Testimonies</a></li>
+          <li><a href="pages/contact.html">Contact Us</a></li>
+        </ul>
+      </li>
+
+      <li class="nav-dropdown">
+        <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">Resources <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <ul class="nav-dropdown-menu" aria-label="Resources submenu">
+          <li><a href="pages/blog.html">Blog &amp; Devotions</a></li>
+          <li><a href="pages/gallery.html">Gallery</a></li>
+          <li><a href="pages/resources.html">Resources</a></li>
+        </ul>
+      </li>
+
+      <li><a href="pages/livestream.html" style="display:flex;align-items:center;gap:6px;">
+        <span class="live-badge"><span class="live-dot"></span>Live</span>
+      </a></li>
+
+      <li><a href="pages/give.html" class="nav-cta">Give Now</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ── MOBILE NAV ── -->
+<div class="mobile-nav" id="mobile-nav" role="dialog" aria-label="Mobile navigation" aria-modal="true">
+  <ul class="mobile-nav-links" role="list">
+    <li><a href="index.html" aria-current="page">Home</a></li>
+    <li>
+      <button type="button" class="mobile-dropdown-toggle" aria-expanded="false">About</button>
+      <ul class="mobile-nav-sublinks" aria-hidden="true">
+        <li><a href="pages/about.html">About Us</a></li>
+        <li><a href="pages/pastors.html">Meet the Pastors</a></li>
+      </ul>
+    </li>
+    <li>
+      <button type="button" class="mobile-dropdown-toggle" aria-expanded="false">Watch</button>
+      <ul class="mobile-nav-sublinks" aria-hidden="true">
+        <li><a href="pages/sermons.html">Sermons</a></li>
+        <li><a href="pages/livestream.html">Live Stream</a></li>
+      </ul>
+    </li>
+    <li><a href="pages/events.html">Events</a></li>
+    <li>
+      <button type="button" class="mobile-dropdown-toggle" aria-expanded="false">Connect</button>
+      <ul class="mobile-nav-sublinks" aria-hidden="true">
+        <li><a href="pages/prayer.html">Prayer Requests</a></li>
+        <li><a href="pages/testimonies.html">Testimonies</a></li>
+        <li><a href="pages/contact.html">Contact Us</a></li>
+      </ul>
+    </li>
+    <li>
+      <button type="button" class="mobile-dropdown-toggle" aria-expanded="false">Ministries</button>
+      <ul class="mobile-nav-sublinks" aria-hidden="true">
+        <li><a href="pages/departments.html">Ministry Departments</a></li>
+        <li><a href="pages/blog.html">Blog &amp; Daily Devotions</a></li>
+        <li><a href="pages/gallery.html">Gallery</a></li>
+        <li><a href="pages/resources.html">Resources</a></li>
+      </ul>
+    </li>
+  </ul>
+  <a href="pages/give.html" class="mobile-nav-give">Give / Donate</a>
+</div>
+
+<!-- ── MAIN ── -->
+<main id="main">
+
+<!-- ── HERO ── -->
+<section class="hero" aria-labelledby="hero-heading">
+  <picture class="hero-media" aria-hidden="true">
+    <img src="images/hero.jpg" alt="" loading="eager" fetchpriority="high">
+  </picture>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span></span>Welcome Home
+    </div>
+    <h1 class="hero-title" id="hero-heading">
+      Find <em>Hope</em><br>in God's Word
+    </h1>
+    <p class="hero-verse">
+      Hope Giving Ministry is a Christ-centered family where people encounter God's Word, grow in prayer, and walk into renewed purpose.
+    </p>
+    <div class="hero-actions">
+      <a href="pages/contact.html" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 22V12M12 12L8 16M12 12L16 16"/><path d="M6 8C6 5 8 2 12 2s6 3 6 6"/></svg>
+        Contact Us
+      </a>
+      <a href="#sermons" class="btn-outline">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>
+        Watch Sermons
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ── WELCOME ── -->
+<section class="welcome" id="welcome" aria-labelledby="welcome-heading">
+  <div class="welcome-inner">
+    <div>
+      <div class="section-label" aria-hidden="true">Welcome</div>
+      <h2 class="welcome-heading" id="welcome-heading">
+        A Place Where<br><span>Lives Are Transformed</span>
+      </h2>
+      <p class="welcome-body">
+        Hope Giving Ministry is more than a church — it is a movement of God's people committed to carrying the Gospel to every heart, home, and nation. We believe that every person carries a God-given destiny, and our calling is to help you discover and live it fully.
+      </p>
+      <p class="welcome-body">
+        Whether you are seeking God for the first time, returning after a season away, or growing deeper in your faith — you belong here. This is a community of love, truth, and genuine transformation.
+      </p>
+      <div class="welcome-stats" role="group" aria-label="Ministry statistics">
+        <div class="stat-box reveal reveal-delay-1">
+          <div class="stat-num">12+</div>
+          <div class="stat-label">Years of Ministry</div>
+        </div>
+        <div class="stat-box reveal reveal-delay-2">
+          <div class="stat-num">2K+</div>
+          <div class="stat-label">Lives Touched</div>
+        </div>
+        <div class="stat-box reveal reveal-delay-3">
+          <div class="stat-num">6</div>
+          <div class="stat-label">Departments</div>
+        </div>
+      </div>
+    </div>
+    <div class="welcome-visual reveal">
+      <div class="welcome-cross-container" role="img" aria-label="Cross symbol representing our faith">
+        <div class="cross-bg">
+          <div class="cross-glow">
+            <div class="cross-ring"></div>
+            <div class="cross-ring"></div>
+            <div class="cross-ring"></div>
+            <img src="images/eee.jpg" alt="Cross symbol representing our faith" class="cross-svg">
+          </div>
+        </div>
+        <div class="welcome-quote" aria-label="Verse: John 3:16 — For God so loved the world that He gave His one and only Son">
+          "For God so loved the world that He gave His one and only Son…"
+          <br><br>
+          <span style="font-style:normal;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;font-weight:800;">— John 3:16</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── VISION & MISSION ── -->
+<section class="vision" aria-labelledby="vision-heading">
+  <div class="container">
+    <div class="vision-header reveal">
+      <div class="section-label" style="justify-content:center;" aria-hidden="true">Vision & Mission</div>
+      <h2 class="vision-title" id="vision-heading">
+        What We <strong>Believe</strong><br>& Why We Exist
+      </h2>
+      <p class="vision-sub">Everything we do flows from our calling to proclaim Jesus and see lives transformed for eternity.</p>
+    </div>
+    <div class="vision-grid">
+      <div class="vision-card reveal reveal-delay-1">
+        <div class="vision-card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 22C17.5 17 22 13.1 22 9a10 10 0 0 0-20 0c0 4.1 4.5 8 10 13z"/>
+            <circle cx="12" cy="9" r="3"/>
+          </svg>
+        </div>
+        <h3 class="vision-card-title">Bring Hope to the Hopeless</h3>
+        <p class="vision-card-text">To reach those in darkness with the light of Jesus Christ, offering salvation and spiritual transformation to every soul.</p>
+      </div>
+      <div class="vision-card reveal reveal-delay-2">
+        <div class="vision-card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <h3 class="vision-card-title">Build Mature Disciples</h3>
+        <p class="vision-card-text">To equip believers to grow in God's Word, serving with excellence and living as authentic ambassadors of Christ.</p>
+      </div>
+      <div class="vision-card reveal reveal-delay-3">
+        <div class="vision-card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </div>
+        <h3 class="vision-card-title">Impact Nations with the Gospel</h3>
+        <p class="vision-card-text">To carry the message of Christ beyond our walls — transforming families, communities, and nations through evangelism.</p>
+      </div>
+      <div class="vision-card reveal reveal-delay-1">
+        <div class="vision-card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+          </svg>
+        </div>
+        <h3 class="vision-card-title">Glorify God Through Worship</h3>
+        <p class="vision-card-text">To honor God through passionate, Spirit-led worship that draws hearts into His presence and transforms atmospheres.</p>
+      </div>
+      <div class="vision-card reveal reveal-delay-2">
+        <div class="vision-card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          </svg>
+        </div>
+        <h3 class="vision-card-title">Demonstrate Compassionate Love</h3>
+        <p class="vision-card-text">To serve the least and the lost with practical love — feeding the hungry, healing the broken, and restoring dignity.</p>
+      </div>
+      <div class="vision-card reveal reveal-delay-3">
+        <div class="vision-card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+          </svg>
+        </div>
+        <h3 class="vision-card-title">Raise a Generation for God's Glory</h3>
+        <p class="vision-card-text">To invest in the next generation — young people who live boldly for Christ and shape the culture around them.</p>
+      </div>
+    </div>
+    <div class="mission-banner reveal" style="margin-top:60px;">
+      <div>
+        <div class="section-label" style="color:var(--gold-light);" aria-hidden="true">Our Mission</div>
+        <p class="mission-text">
+          To <strong>proclaim the Gospel</strong> of Jesus Christ, restore hope, disciple believers, and demonstrate God's love through <strong>practical ministry</strong> — one life at a time.
+        </p>
+      </div>
+      <a href="pages/about.html" class="btn-primary" style="flex-shrink:0;">Learn More</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERMONS ── -->
+<section class="sermons" id="sermons" aria-labelledby="sermons-heading">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <div class="section-label" aria-hidden="true">Sermons</div>
+        <h2 class="section-heading" id="sermons-heading">Featured Sermons</h2>
+      </div>
+      <a href="pages/sermons.html" class="view-all" aria-label="View all sermons">
+        View All
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="sermons-grid">
+      <article class="sermon-card reveal reveal-delay-1">
+        <div class="sermon-thumb" style="padding:0;background:none;">
+          <iframe src="https://www.youtube-nocookie.com/embed/0_HOZCmaS_g" title="When Darkness Feels Like Home" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <div class="sermon-play" aria-label="Play sermon" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.15);transition:background 0.3s;">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:56px;height:56px;background:rgba(255,255,255,0.95);border-radius:50%;padding:12px;box-shadow:0 4px 20px rgba(0,0,0,0.2);" aria-hidden="true">
+              <path d="M8 5v14l11-7z" fill="#1B4B9E"/>
+            </svg>
+          </div>
+        </div>
+        <div class="sermon-body">
+          <div class="sermon-series">Series: The God Who Restores</div>
+          <h3 class="sermon-title">When Darkness Feels Like Home</h3>
+          <div class="sermon-meta">
+            <span>Pastor John Mutua</span>
+            <span>·</span>
+            <span>June 8, 2025</span>
+            <span>·</span>
+            <span>42 min</span>
+          </div>
+        </div>
+      </article>
+      <article class="sermon-card reveal reveal-delay-2">
+        <div class="sermon-thumb" style="padding:0;background:none;">
+          <iframe src="https://www.youtube-nocookie.com/embed/M7lc1UVf-VE" title="Faith That Moves Mountains" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <div class="sermon-play" aria-label="Play sermon" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.15);transition:background 0.3s;">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:56px;height:56px;background:rgba(255,255,255,0.95);border-radius:50%;padding:12px;box-shadow:0 4px 20px rgba(0,0,0,0.2);" aria-hidden="true">
+              <path d="M8 5v14l11-7z" fill="#0F6E56"/>
+            </svg>
+          </div>
+        </div>
+        <div class="sermon-body">
+          <div class="sermon-series">Series: Kingdom Living</div>
+          <h3 class="sermon-title">Faith That Moves Mountains</h3>
+          <div class="sermon-meta">
+            <span>Ps. Sarah Wanjiku</span>
+            <span>·</span>
+            <span>June 1, 2025</span>
+            <span>·</span>
+            <span>38 min</span>
+          </div>
+        </div>
+      </article>
+      <article class="sermon-card reveal reveal-delay-3">
+        <div class="sermon-thumb" style="padding:0;background:none;">
+          <iframe src="https://www.youtube-nocookie.com/embed/ysz5S6PUM-U" title="Jehovah Jireh: God Who Provides" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;border:0;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <div class="sermon-play" aria-label="Play sermon" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.15);transition:background 0.3s;">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:56px;height:56px;background:rgba(255,255,255,0.95);border-radius:50%;padding:12px;box-shadow:0 4px 20px rgba(0,0,0,0.2);" aria-hidden="true">
+              <path d="M8 5v14l11-7z" fill="#854F0B"/>
+            </svg>
+          </div>
+        </div>
+        <div class="sermon-body">
+          <div class="sermon-series">Series: The Names of God</div>
+          <h3 class="sermon-title">Jehovah Jireh: God Who Provides</h3>
+          <div class="sermon-meta">
+            <span>Pastor John Mutua</span>
+            <span>·</span>
+            <span>May 25, 2025</span>
+            <span>·</span>
+            <span>51 min</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── EVENTS ── -->
+<section class="events" aria-labelledby="events-heading">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <div class="section-label" style="color:var(--gold);" aria-hidden="true">
+          <span style="display:block;width:24px;height:1px;background:var(--gold);"></span>
+          Upcoming
+        </div>
+        <h2 class="section-heading" id="events-heading" style="color:var(--white);">Events & Gatherings</h2>
+      </div>
+      <a href="pages/events.html" class="view-all" style="color:var(--gold);" aria-label="View all events">
+        View Calendar
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="events-grid">
+      <article class="event-card reveal reveal-delay-1">
+        <div class="event-date" aria-label="June 22">
+          <div class="event-day">22</div>
+          <div class="event-month">Jun</div>
+        </div>
+        <div class="event-info">
+          <div class="event-type">Sunday Service</div>
+          <h3 class="event-title">Sunday Celebration & Worship</h3>
+          <div class="event-detail">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            9:00 AM & 11:30 AM
+          </div>
+        </div>
+      </article>
+      <article class="event-card reveal reveal-delay-2">
+        <div class="event-date" aria-label="June 27">
+          <div class="event-day">27</div>
+          <div class="event-month">Jun</div>
+        </div>
+        <div class="event-info">
+          <div class="event-type">Prayer Night</div>
+          <h3 class="event-title">All-Night Prayer & Intercession</h3>
+          <div class="event-detail">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            10:00 PM – 5:00 AM
+          </div>
+        </div>
+      </article>
+      <article class="event-card reveal reveal-delay-3">
+        <div class="event-date" aria-label="July 5">
+          <div class="event-day">05</div>
+          <div class="event-month">Jul</div>
+        </div>
+        <div class="event-info">
+          <div class="event-type">Youth Conference</div>
+          <h3 class="event-title">Ignite Youth Summit 2025</h3>
+          <div class="event-detail">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            All Day — 3 Days
+          </div>
+        </div>
+      </article>
+      <article class="event-card reveal reveal-delay-4">
+        <div class="event-date" aria-label="July 19">
+          <div class="event-day">19</div>
+          <div class="event-month">Jul</div>
+        </div>
+        <div class="event-info">
+          <div class="event-type">Evangelism</div>
+          <h3 class="event-title">City-Wide Gospel Outreach</h3>
+          <div class="event-detail">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            8:00 AM – 6:00 PM
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRAYER & TESTIMONIES ── -->
+<section class="prayer" aria-labelledby="prayer-heading">
+  <div class="prayer-inner">
+    <div class="prayer-block reveal">
+      <div class="vision-card-icon" aria-hidden="true" style="background:rgba(201,168,76,0.1);width:50px;height:50px;border-radius:12px;display:flex;align-items:center;justify-content:center;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.8" width="26" height="26" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+        </svg>
+      </div>
+      <h2 class="prayer-block-title" id="prayer-heading">Submit a Prayer Request</h2>
+      <p class="prayer-block-text">You are never alone in your struggles. Our prayer team intercedes daily for every request submitted. Share your need and watch God move on your behalf.</p>
+      <a href="pages/prayer.html" class="btn-primary" style="background:var(--royal);color:white;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Send Prayer Request
+      </a>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <div class="section-label" aria-hidden="true">Testimonies</div>
+      <h2 class="prayer-block-title">What God Has Done</h2>
+      <div class="testimonial-card">
+        <p class="testimonial-quote">"I came broken, without hope, without direction. Hope Giving Ministry loved me back to life. Jesus is real, and I am walking proof."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" aria-hidden="true">AM</div>
+          <div>
+            <div class="author-name">Agnes M.</div>
+            <div class="author-loc">Kigali, Rwanda</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-quote">"Our marriage was on the brink of collapse. Through counseling and prayer here, God completely restored us. We are living our miracle."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" aria-hidden="true">DK</div>
+          <div>
+            <div class="author-name">David & Karen O.</div>
+            <div class="author-loc">Mombasa, Kenya</div>
+          </div>
+        </div>
+      </div>
+      <a href="pages/testimonies.html" class="view-all" style="color:var(--gold);margin-top:20px;display:inline-flex;" aria-label="Read more testimonies">
+        Read More Testimonies
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── DEPARTMENTS ── -->
+<section class="departments" aria-labelledby="departments-heading">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <div class="section-label" aria-hidden="true">Our Ministries</div>
+        <h2 class="section-heading" id="departments-heading">Ministry Departments</h2>
+      </div>
+      <a href="pages/departments.html" class="view-all" aria-label="View all ministry departments">
+        Explore All
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="dept-grid">
+      <div class="dept-card reveal reveal-delay-1">
+        <div class="dept-icon" style="background:#EEF2FF;" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#3730A3" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div class="dept-name">Men's Fellowship</div>
+        <div class="dept-sub">Building Godly Men</div>
+      </div>
+      <div class="dept-card reveal reveal-delay-2">
+        <div class="dept-icon" style="background:#FDF2F8;" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#9D174D" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <div class="dept-name">Women's Ministry</div>
+        <div class="dept-sub">Daughters of Grace</div>
+      </div>
+      <div class="dept-card reveal reveal-delay-3">
+        <div class="dept-icon" style="background:#F0FDF4;" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#15803D" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div class="dept-name">Youth Ministry</div>
+        <div class="dept-sub">Igniting the Next Gen</div>
+      </div>
+      <div class="dept-card reveal reveal-delay-1">
+        <div class="dept-icon" style="background:#FFF7ED;" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#C2410C" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </div>
+        <div class="dept-name">Children's Church</div>
+        <div class="dept-sub">Building Little Warriors</div>
+      </div>
+      <div class="dept-card reveal reveal-delay-2">
+        <div class="dept-icon" style="background:#ECFDF5;" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div class="dept-name">Evangelism</div>
+        <div class="dept-sub">Taking the Gospel Out</div>
+      </div>
+      <div class="dept-card reveal reveal-delay-3">
+        <div class="dept-icon" style="background:#FEF3C7;" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        </div>
+        <div class="dept-name">Worship Team</div>
+        <div class="dept-sub">Leading Hearts to God</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── GIVING ── -->
+<section class="giving" id="give" aria-labelledby="giving-heading">
+  <div class="giving-inner">
+    <div class="section-label" style="justify-content:center;color:var(--gold-light);" aria-hidden="true">
+      <span style="display:block;width:24px;height:1px;background:var(--gold-light);"></span>
+      Giving
+    </div>
+    <h2 class="giving-title" id="giving-heading" class="reveal">
+      Partner in the<br><strong>Work of the Kingdom</strong>
+    </h2>
+    <p class="giving-verse">"Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver."</p>
+    <p class="giving-ref">— 2 Corinthians 9:7</p>
+    <p style="max-width:620px;margin:0 auto 28px;color:rgba(255,255,255,0.82);font-size:16px;line-height:1.8;">
+      Your generosity helps us reach families, support missions, and serve the community with care.
+    </p>
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:40px;">
+      <a href="pages/give.html" class="btn-primary" style="font-size:14px;padding:16px 48px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      Give to the Ministry
+      </a>
+      <a href="pages/contact.html" class="btn-outline" style="border-color:rgba(255,255,255,0.28);color:var(--white);padding:16px 28px;">
+        Contact Us
+      </a>
+    </div>
+    <div class="giving-impacts" role="list">
+      <div class="impact-box" role="listitem">
+        <div class="impact-num">500+</div>
+        <div class="impact-label">Salvations This Year</div>
+      </div>
+      <div class="impact-box" role="listitem">
+        <div class="impact-num">12</div>
+        <div class="impact-label">Missions Supported</div>
+      </div>
+      <div class="impact-box" role="listitem">
+        <div class="impact-num">3K+</div>
+        <div class="impact-label">Lives Impacted</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── DEVOTIONAL ── -->
+<section class="devotional" aria-labelledby="devotional-heading">
+  <div class="devotional-inner">
+    <div class="reveal">
+      <div class="section-label" aria-hidden="true">Daily Word</div>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4vw,40px);font-weight:400;color:var(--white);margin-bottom:32px;" id="devotional-heading">
+        Daily Devotional
+      </h2>
+      <div class="devotional-featured">
+        <div class="devotional-thumb">
+          <div class="devotional-thumb-text" aria-hidden="true">WORD</div>
+          <p class="devotional-thumb-verse">"I can do all things through Christ who strengthens me." — Phil. 4:13</p>
+        </div>
+        <div class="devotional-content">
+          <div class="devotional-date">Saturday, June 13, 2025</div>
+          <h3 class="devotional-title">Strength for Every Season: Resting in Christ's Power</h3>
+          <p class="devotional-excerpt">In every valley and every mountain, Christ is the constant. Today's devotion reminds us that our strength is not found in our circumstances but in the One who holds all things together...</p>
+          <a href="pages/blog.html" class="btn-outline" style="border-color:rgba(201,168,76,0.4);color:var(--gold-light);padding:10px 24px;font-size:12px;">Read Full Devotion →</a>
+        </div>
+      </div>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <h3 class="devotional-sidebar-title">Previous Devotions</h3>
+      <div>
+        <div class="sidebar-post">
+          <div class="sidebar-post-date"><strong>12</strong> Jun</div>
+          <a href="pages/blog.html" class="sidebar-post-title">When God Seems Silent: Trusting in the Dark</a>
+        </div>
+        <div class="sidebar-post">
+          <div class="sidebar-post-date"><strong>11</strong> Jun</div>
+          <a href="pages/blog.html" class="sidebar-post-title">The Promises of God Never Fail</a>
+        </div>
+        <div class="sidebar-post">
+          <div class="sidebar-post-date"><strong>10</strong> Jun</div>
+          <a href="pages/blog.html" class="sidebar-post-title">Walking in Holiness: A Daily Commitment</a>
+        </div>
+        <div class="sidebar-post">
+          <div class="sidebar-post-date"><strong>9</strong> Jun</div>
+          <a href="pages/blog.html" class="sidebar-post-title">Grace That Is Greater Than All My Sin</a>
+        </div>
+        <div class="sidebar-post">
+          <div class="sidebar-post-date"><strong>8</strong> Jun</div>
+          <a href="pages/blog.html" class="sidebar-post-title">Surrender: The Path to True Freedom</a>
+        </div>
+      </div>
+      <a href="pages/blog.html" class="view-all" style="color:var(--gold);margin-top:28px;display:inline-flex;" aria-label="View all blog posts and devotions">
+        All Devotions & Blog
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer aria-labelledby="footer-heading">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <a href="index.html" class="footer-brand-logo" aria-label="Hope Giving Ministry home">
+          <img src="images/logo.png" alt="Hope Giving Ministry logo" width="48" height="48">
+        </a>
+        <h2 class="footer-brand-name" id="footer-heading">Hope Giving Ministry</h2>
+        <p class="footer-brand-text">Proclaiming the Gospel of Jesus Christ, restoring hope, discipling believers, and demonstrating God's love through practical ministry.</p>
+        <div class="footer-socials" aria-label="Social media links">
+          <span class="social-btn" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </span>
+          <span class="social-btn" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="rgba(255,255,255,0.6)" stroke="none"/></svg>
+          </span>
+          <span class="social-btn" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </span>
+          <span class="social-btn" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="1.8" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </span>
+        </div>
+      </div>
+      <div>
+        <h3 class="footer-col-title">Ministry</h3>
+        <ul class="footer-links">
+          <li><a href="pages/about.html">About Us</a></li>
+          <li><a href="pages/pastors.html">Meet The Pastors</a></li>
+          <li><a href="pages/about.html">Our Beliefs</a></li>
+          <li><a href="pages/departments.html">Ministry Departments</a></li>
+          <li><a href="pages/gallery.html">Gallery</a></li>
+          <li><a href="pages/resources.html">Resources</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="footer-col-title">Connect</h3>
+        <ul class="footer-links">
+          <li><a href="pages/sermons.html">Sermons</a></li>
+          <li><a href="pages/livestream.html">Live Stream</a></li>
+          <li><a href="pages/events.html">Events</a></li>
+          <li><a href="pages/prayer.html">Prayer Requests</a></li>
+          <li><a href="pages/testimonies.html">Testimonies</a></li>
+          <li><a href="pages/blog.html">Blog & Devotions</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="footer-col-title">Contact</h3>
+        <ul class="footer-links" style="list-style:none;">
+          <li style="margin-bottom:12px;font-size:13.5px;color:var(--text-muted);">
+            <span style="display:block;font-weight:500;color:rgba(255,255,255,0.6);font-size:12px;margin-bottom:4px;">Address</span>
+            123 Faith Avenue, Kigali, Rwanda
+          </li>
+          <li style="margin-bottom:12px;font-size:13.5px;color:var(--text-muted);">
+            <span style="display:block;font-weight:500;color:rgba(255,255,255,0.6);font-size:12px;margin-bottom:4px;">Email</span>
+            info@hopegivingministry.org
+          </li>
+          <li style="font-size:13.5px;color:var(--text-muted);">
+            <span style="display:block;font-weight:500;color:rgba(255,255,255,0.6);font-size:12px;margin-bottom:4px;">Phone</span>
+            +250 780 000 000
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Hope Giving Ministry. All rights reserved.</p>
+      <p class="footer-verse">"The Lord is my shepherd; I shall not want." — Psalm 23:1</p>
+    </div>
+  </div>
+</footer>
+
+</main>
+
+<script>
+// ── NAV SCROLL ──
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+// ── HAMBURGER ──
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobile-nav');
+let menuOpen = false;
+
+hamburger.addEventListener('click', () => {
+  menuOpen = !menuOpen;
+  hamburger.classList.toggle('open', menuOpen);
+  mobileNav.classList.toggle('open', menuOpen);
+  hamburger.setAttribute('aria-expanded', menuOpen);
+  document.body.style.overflow = menuOpen ? 'hidden' : '';
+});
+
+mobileNav.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    menuOpen = false;
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  });
+});
+
+// ── MOBILE DROPDOWNS ──
+document.querySelectorAll('.mobile-dropdown-toggle').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const open = btn.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+    const sub = btn.nextElementSibling;
+    sub.classList.toggle('open', open);
+    sub.setAttribute('aria-hidden', !open);
+  });
+});
+
+// ── DESKTOP DROPDOWN ACCESSIBILITY ──
+document.querySelectorAll('.nav-dropdown-toggle').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    const li = btn.closest('.nav-dropdown');
+    const wasOpen = li.classList.contains('open');
+    document.querySelectorAll('.nav-dropdown.open').forEach(el => el.classList.remove('open'));
+    li.classList.toggle('open', !wasOpen);
+    btn.setAttribute('aria-expanded', !wasOpen);
+    e.preventDefault();
+  });
+});
+
+window.addEventListener('click', (e) => {
+  if (!e.target.closest('.nav-dropdown')) {
+    document.querySelectorAll('.nav-dropdown.open').forEach(el => el.classList.remove('open'));
+    document.querySelectorAll('.nav-dropdown-toggle').forEach(btn => btn.setAttribute('aria-expanded', 'false'));
+  }
+});
+
+// ── HERO CANVAS ANIMATION ──
+const canvas = document.getElementById('hero-canvas');
+if (canvas) {
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+  const PARTICLE_COUNT = 80;
+
+  function resize() {
+    W = canvas.width = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  class Particle {
+    constructor() { this.reset(); }
+    reset() {
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.size = Math.random() * 1.5 + 0.3;
+      this.speedX = (Math.random() - 0.5) * 0.3;
+      this.speedY = -Math.random() * 0.4 - 0.1;
+      this.opacity = Math.random() * 0.5 + 0.1;
+      this.gold = Math.random() > 0.7;
+    }
+    update() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      if (this.y < -10 || this.x < -10 || this.x > W + 10) this.reset();
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = this.gold
+        ? `rgba(201,168,76,${this.opacity})`
+        : `rgba(255,255,255,${this.opacity * 0.5})`;
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+
+  function drawBg() {
+    const grad = ctx.createRadialGradient(W * 0.5, H * 0.35, 0, W * 0.5, H * 0.35, W * 0.7);
+    grad.addColorStop(0, 'rgba(27,75,158,0.25)');
+    grad.addColorStop(0.5, 'rgba(19,40,69,0.15)');
+    grad.addColorStop(1, 'rgba(11,31,58,0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  function drawRays() {
+    const cx = W * 0.5, cy = -H * 0.1;
+    const rays = 8;
+    for (let i = 0; i < rays; i++) {
+      const angle = (Math.PI / rays) * i + Math.PI * 0.15;
+      const length = H * 1.4;
+      const spread = 0.025 + Math.random() * 0.005;
+      ctx.save();
+      ctx.globalAlpha = 0.018 + Math.sin(Date.now() * 0.0005 + i) * 0.008;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(
+        cx + Math.cos(angle - spread) * length,
+        cy + Math.sin(angle - spread) * length
+      );
+      ctx.lineTo(
+        cx + Math.cos(angle + spread) * length,
+        cy + Math.sin(angle + spread) * length
+      );
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(201,168,76,1)';
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, W, H);
+    drawBg();
+    drawRays();
+    particles.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(animate);
+  }
+  animate();
+}
+
+// ── SCROLL REVEAL ──
+const reveals = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+reveals.forEach(el => revealObserver.observe(el));
+
+// ── KEYBOARD ESCAPE CLOSES MENU ──
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && menuOpen) {
+    menuOpen = false;
+    hamburger.classList.remove('open');
+    mobileNav.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+    hamburger.focus();
+  }
+});
+</script>
+</body>
+</html>

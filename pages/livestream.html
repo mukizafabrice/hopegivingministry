@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Hope Giving Ministry — Live Stream">
+<title>Live Stream — Hope Giving Ministry</title>
+<link rel="icon" href="../images/logo.png" type="image/png">
+<link rel="apple-touch-icon" href="../images/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/main.css">
+</head><body>
+<a href="../index.html#main" style="position:absolute;left:-9999px;top:0;background:#C9A84C;color:#0B1F3A;padding:8px 16px;z-index:9999;font-weight:600;border-radius:0 0 6px 6px;" onfocus="this.style.left='0'">Skip to main content</a>
+<nav id="main-nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo" aria-label="Hope Giving Ministry home">
+      <img src="../images/logo.png" alt="" class="nav-logo-img" width="40" height="40">
+      <div class="nav-logo-text">
+        <span class="nav-logo-name">Hope Giving Ministry</span>
+      </div>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="../index.html">Home</a></li>
+      <li class="nav-dropdown">
+        <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">About <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <ul class="nav-dropdown-menu" aria-label="About submenu">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="pastors.html">Meet the Pastors</a></li>
+          <li><a href="../index.html#vision">Vision &amp; Mission</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">Watch <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <ul class="nav-dropdown-menu" aria-label="Watch submenu">
+          <li><a href="sermons.html">Sermons</a></li>
+          <li><a href="livestream.html">Live Stream</a></li>
+          <li><a href="sermons.html#series">Series</a></li>
+        </ul>
+      </li>
+      <li><a href="events.html">Events</a></li>
+      <li class="nav-dropdown">
+        <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">Connect <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <ul class="nav-dropdown-menu" aria-label="Connect submenu">
+          <li><a href="prayer.html">Prayer Requests</a></li>
+          <li><a href="testimonies.html">Testimonies</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">Resources <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <ul class="nav-dropdown-menu" aria-label="Resources submenu">
+          <li><a href="blog.html">Blog &amp; Devotions</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="resources.html">Resources</a></li>
+        </ul>
+      </li>
+      <li><a href="livestream.html" style="display:flex;align-items:center;gap:6px;"><span class="live-badge"><span class="live-dot"></span>Live</span></a></li>
+      <li><a href="give.html" class="nav-cta">Give Now</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobile-nav" role="dialog" aria-label="Mobile navigation" aria-modal="true">
+  <ul class="mobile-nav-links" role="list">
+    <li><a href="../index.html">Home</a></li>
+    <li>
+      <button type="button" class="mobile-dropdown-toggle" aria-expanded="false">About</button>
+      <ul class="mobile-nav-sublinks" aria-hidden="true">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="pastors.html">Meet the Pastors</a></li>
+      </ul>
+    </li>
+    <li>
+      <button type="button" class="mobile-dropdown-toggle" aria-expanded="false">Watch</button>
+      <ul class="mobile-nav-sublinks" aria-hidden="true">
+        <li><a href="sermons.html">Sermons</a></li>
+        <li><a href="livestream.html">Live Stream</a></li>
+      </ul>
+    </li>
+    <li><a href="events.html">Events</a></li>
+    <li>
+      <button type="button" class="mobile-dropdown-toggle" aria-expanded="false">Connect</button>
+      <ul class="mobile-nav-sublinks" aria-hidden="true">
+        <li><a href="prayer.html">Prayer Requests</a></li>
+        <li><a href="testimonies.html">Testimonies</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </li>
+    <li>
+      <button type="button" class="mobile-dropdown-toggle" aria-expanded="false">Ministries</button>
+      <ul class="mobile-nav-sublinks" aria-hidden="true">
+        <li><a href="departments.html">Ministry Departments</a></li>
+        <li><a href="blog.html">Blog &amp; Daily Devotions</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="resources.html">Resources</a></li>
+      </ul>
+    </li>
+  </ul>
+  <a href="give.html" class="mobile-nav-give">Give / Donate</a>
+</div>
+
+<main id="main">
+
+<style>
+.stream-embed { width:100%;aspect-ratio:16/9;background:#000;border-radius:var(--radius-lg);overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center; }
+.countdown-unit { text-align:center; }
+.countdown-num { font-family:'Cormorant Garamond',serif;font-size:clamp(40px,8vw,72px);font-weight:300;color:var(--gold);line-height:1; }
+.countdown-label { font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);margin-top:4px; }
+@media (max-width: 820px) {
+  .stream-layout { grid-template-columns: 1fr !important; gap: 28px !important; }
+  .stream-embed { border-radius: 10px; }
+}
+</style>
+<section class="page-hero" style="min-height:240px;">
+  <div class="page-hero-content">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Home</a><span>/</span><span>Live Stream</span></nav>
+    <h1 class="heading-xl page-hero-title">Watch <em class="italic text-gold">Live</em></h1>
+    <p class="page-hero-sub">Join thousands watching online — every Sunday at 9:00 AM and 11:30 AM EAT.</p>
+  </div>
+</section>
+
+<section class="section section-dark" style="padding-top:40px;">
+  <div class="container" style="max-width:1100px;">
+    <div class="stream-layout" style="display:grid;grid-template-columns:2fr 1fr;gap:40px;align-items:start;">
+      <div>
+        <div class="stream-embed reveal">
+          <div id="stream-offline-view" style="position:absolute;inset:0;background:linear-gradient(135deg,var(--navy-mid),var(--royal));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;">
+            <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);border-radius:50%;padding:28px;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="rgba(201,168,76,0.7)" stroke-width="1.4" width="56" height="56"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+            </div>
+            <div style="text-align:center;">
+              <span class="live-badge" style="font-size:12px;padding:6px 16px;margin-bottom:12px;display:inline-flex;">
+                <span class="live-dot"></span>Next Service Starting Soon
+              </span>
+              <p style="font-family:'Cormorant Garamond',serif;font-size:22px;color:white;margin-top:12px;">Sunday Celebration Service</p>
+              <p style="font-size:13px;color:var(--text-muted);margin-top:4px;">June 22, 2025 — 9:00 AM EAT</p>
+            </div>
+            <div data-countdown="2025-06-22T09:00:00+03:00" style="display:flex;gap:32px;margin-top:8px;">
+              <div class="countdown-unit"><div class="countdown-num" data-d>00</div><div class="countdown-label">Days</div></div>
+              <div class="countdown-unit"><div class="countdown-num" data-h>00</div><div class="countdown-label">Hours</div></div>
+              <div class="countdown-unit"><div class="countdown-num" data-m>00</div><div class="countdown-label">Mins</div></div>
+              <div class="countdown-unit"><div class="countdown-num" data-s>00</div><div class="countdown-label">Secs</div></div>
+            </div>
+          </div>
+          <div id="stream-live-view" style="display:none;position:absolute;inset:0;"></div>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;">
+          <button type="button" id="reminder-btn" class="btn btn-gold" aria-label="Set reminder for live stream">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            Set Reminder
+          </button>
+          <button type="button" id="share-stream-btn" class="btn btn-outline" aria-label="Share live stream">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            Share
+          </button>
+          <a href="sermons.html" class="btn btn-outline">Watch Past Sermons →</a>
+        </div>
+        <div style="margin-top:14px;">
+          <a href="#" id="admin-trigger" style="font-size:11px;color:var(--text-muted);text-decoration:underline;">Admin Login</a>
+        </div>
+      </div>
+      <div>
+        <h3 class="heading-md reveal" style="margin-bottom:24px;">Service Schedule</h3>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+
+          <div class="card reveal reveal-delay-1">
+            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:6px;">
+              <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);">Sunday</span>
+              <span class="tag tag-gold" style="font-size:9px;">Weekly</span>
+            </div>
+            <p style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:white;margin-bottom:4px;">Celebration Service</p>
+            <p style="font-size:13px;color:var(--text-muted);">9:00 AM & 11:30 AM EAT</p>
+          </div>
+
+
+          <div class="card reveal reveal-delay-2">
+            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:6px;">
+              <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);">Wednesday</span>
+              <span class="tag tag-gold" style="font-size:9px;">Weekly</span>
+            </div>
+            <p style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:white;margin-bottom:4px;">Mid-Week Bible Study</p>
+            <p style="font-size:13px;color:var(--text-muted);">6:30 PM EAT</p>
+          </div>
+
+
+          <div class="card reveal reveal-delay-3">
+            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:6px;">
+              <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);">Friday</span>
+              <span class="tag tag-gold" style="font-size:9px;">Weekly</span>
+            </div>
+            <p style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:white;margin-bottom:4px;">Youth Night</p>
+            <p style="font-size:13px;color:var(--text-muted);">5:00 PM EAT</p>
+          </div>
+
+
+          <div class="card reveal reveal-delay-4">
+            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:6px;">
+              <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);">Last Friday</span>
+              <span class="tag tag-gold" style="font-size:9px;">Monthly</span>
+            </div>
+            <p style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:white;margin-bottom:4px;">All-Night Prayer</p>
+            <p style="font-size:13px;color:var(--text-muted);">10:00 PM — 5:00 AM</p>
+          </div>
+
+        </div>
+        <div class="card" style="margin-top:20px;background:rgba(201,168,76,0.08);border-color:rgba(201,168,76,0.2);">
+          <p style="font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--gold-light);margin-bottom:8px;">"Where two or three gather in my name, there am I with them."</p>
+          <p style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);">Matthew 18:20</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="admin-modal" style="display:none;position:fixed;inset:0;background:rgba(11,31,58,0.75);backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center;padding:20px;">
+  <div class="card" style="max-width:380px;width:100%;position:relative;">
+    <button id="admin-modal-close" type="button" aria-label="Close" style="position:absolute;top:14px;right:14px;background:none;border:none;color:var(--text-muted);font-size:20px;cursor:pointer;line-height:1;">&times;</button>
+
+    <div id="admin-login-step">
+      <h3 class="heading-md" style="margin-bottom:16px;">Admin Login</h3>
+      <form id="admin-login-form">
+        <label style="display:block;font-size:12px;color:var(--text-muted);margin-bottom:6px;">Username</label>
+        <input type="text" id="admin-username" autocomplete="username" style="width:100%;padding:10px 12px;margin-bottom:14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:white;font-size:14px;box-sizing:border-box;">
+        <label style="display:block;font-size:12px;color:var(--text-muted);margin-bottom:6px;">Password</label>
+        <input type="password" id="admin-password" autocomplete="current-password" style="width:100%;padding:10px 12px;margin-bottom:14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:white;font-size:14px;box-sizing:border-box;">
+        <p id="admin-login-error" style="display:none;color:#e07a7a;font-size:12px;margin-bottom:12px;"></p>
+        <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center;">Log In</button>
+      </form>
+    </div>
+
+    <div id="admin-manage-step" style="display:none;">
+      <h3 class="heading-md" style="margin-bottom:16px;">Manage Live Stream</h3>
+      <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:white;margin-bottom:16px;cursor:pointer;">
+        <input type="checkbox" id="live-toggle" style="width:16px;height:16px;">
+        Stream is currently live
+      </label>
+      <label style="display:block;font-size:12px;color:var(--text-muted);margin-bottom:6px;">Live stream URL (YouTube, Instagram, Facebook...)</label>
+      <input type="url" id="live-url-input" placeholder="https://youtube.com/watch?v=..." style="width:100%;padding:10px 12px;margin-bottom:14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:white;font-size:14px;box-sizing:border-box;">
+      <p id="admin-status-msg" style="display:none;font-size:12px;margin-bottom:12px;"></p>
+      <div style="display:flex;gap:10px;">
+        <button id="admin-save-btn" type="button" class="btn btn-gold" style="flex:1;justify-content:center;">Update</button>
+        <button id="admin-logout-btn" type="button" class="btn btn-outline" style="flex:1;justify-content:center;">Log Out</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</main>
+<footer class="site-footer"><div class="footer-grid"><div><a href="../index.html" class="footer-brand-logo" aria-label="Hope Giving Ministry home"><img src="../images/logo.png" alt="Hope Giving Ministry logo" width="48" height="48"></a><p class="footer-brand-name">Hope Giving Ministry</p><p class="footer-brand-text">Proclaiming the Gospel, restoring hope, discipling believers, and demonstrating God's love through practical ministry.</p><div class="footer-socials"><a href="#" class="social-btn" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a><a href="#" class="social-btn" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.8"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="rgba(255,255,255,0.55)" stroke="none"/></svg></a><a href="#" class="social-btn" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/></svg></a><a href="#" class="social-btn" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a></div></div><div><p class="footer-col-title">Ministry</p><ul class="footer-col-links"><li><a href="about.html">About Us</a></li><li><a href="pastors.html">Meet The Pastors</a></li><li><a href="departments.html">Departments</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="resources.html">Resources</a></li></ul></div><div><p class="footer-col-title">Connect</p><ul class="footer-col-links"><li><a href="sermons.html">Sermons</a></li><li><a href="livestream.html">Live Stream</a></li><li><a href="events.html">Events</a></li><li><a href="prayer.html">Prayer Requests</a></li><li><a href="testimonies.html">Testimonies</a></li><li><a href="blog.html">Blog &amp; Devotions</a></li></ul></div><div><p class="footer-col-title">Contact</p><p style="font-size:13px;color:#9BA8BF;line-height:2;">123 Faith Avenue<br>Kigali, Rwanda<br><a href="mailto:caleb@gmail.com" style="color:#C9A84C;">caleb@gmail.com</a><br><a href="tel:+250780000000" style="color:#C9A84C;">+250 780 000 000</a></p></div></div><div class="footer-divider"></div><div class="footer-bottom"><p class="footer-copy">&copy; 2025 Hope Giving Ministry. All rights reserved.</p><p class="footer-verse">&ldquo;The Lord is my shepherd; I shall not want.&rdquo; &mdash; Psalm 23:1</p></div></footer>
+<script src='../js/main.js'></script>
+<script src="../js/livestream-admin.js"></script>
+</body></html>

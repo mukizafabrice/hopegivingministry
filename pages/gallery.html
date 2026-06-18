@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../images/logo.png" type="image/png">
+<link rel="apple-touch-icon" href="../images/logo.png">
+<meta name="description" content="Hope Giving Ministry � Gallery">
+<title>Gallery � Hope Giving Ministry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/main.css">
+<style>
+.hero-eyebrow { display:inline-flex; align-items:center; gap:8px; background:rgba(201,168,76,0.12); border:1px solid rgba(201,168,76,0.3); border-radius:100px; padding:6px 16px; font-size:11px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); margin-bottom:28px; opacity:0; animation: fadeUp 0.8s ease 0.3s forwards; }
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.05s; }
+.reveal-delay-2 { transition-delay: 0.1s; }
+.reveal-delay-3 { transition-delay: 0.15s; }
+.reveal-delay-4 { transition-delay: 0.2s; }
+
+.gallery-masonry {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 260px;
+  gap: 14px;
+}
+.gallery-item {
+  position: relative; border-radius: var(--radius-md, 14px);
+  overflow: hidden; cursor: pointer;
+  background: #132845;
+}
+.gallery-item img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+.gallery-item:hover img { transform: scale(1.06); }
+.gallery-item-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(11,31,58,0.9) 0%, rgba(11,31,58,0.35) 45%, transparent 100%);
+  opacity: 0; transition: opacity 0.3s;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 18px;
+}
+.gallery-item:hover .gallery-item-overlay { opacity: 1; }
+.gallery-item-tag {
+  display: inline-flex; background: var(--gold); color: var(--navy);
+  padding: 3px 10px; border-radius: 100px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; margin-bottom: 6px; width: fit-content;
+}
+.gallery-item-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px; font-weight: 600; color: white; line-height: 1.3;
+}
+.gallery-item-view {
+  font-size: 10.5px; color: var(--gold);
+  letter-spacing: 0.06em; font-weight: 600;
+  margin-top: 3px; text-transform: uppercase;
+}
+
+/* -- LIGHTBOX -- */
+.lightbox {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,0.94);
+  backdrop-filter: blur(8px);
+  display: none; align-items: center; justify-content: center;
+  padding: 24px;
+}
+.lightbox.open { display: flex; }
+.lightbox-inner {
+  position: relative; max-width: 90vw; max-height: 85vh;
+  border-radius: 14px; overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+  animation: lbIn 0.25s ease; background: #000;
+}
+@keyframes lbIn { from { opacity:0; transform:scale(0.96); } to { opacity:1; transform:scale(1); } }
+.lightbox-inner img { max-width: 90vw; max-height: 85vh; object-fit: contain; display: block; }
+.lightbox-close {
+  position: absolute; top: 14px; right: 14px;
+  width: 36px; height: 36px; background: rgba(0,0,0,0.55);
+  color: white; border: none; border-radius: 50%;
+  font-size: 18px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s; z-index: 2;
+}
+.lightbox-close:hover { background: var(--gold); color: var(--navy); }
+.lightbox-caption {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+  padding: 40px 20px 18px; color: white;
+}
+.lightbox-caption-title { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 600; }
+.lightbox-caption-tag { font-size: 11px; color: var(--gold); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 3px; }
+.lightbox-nav {
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 42px; height: 42px; background: rgba(0,0,0,0.5);
+  color: white; border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 50%; cursor: pointer; font-size: 20px;
+  display: flex; align-items: center; justify-content: center; transition: all 0.2s;
+}
+.lightbox-nav:hover { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+.lightbox-prev { left: 14px; }
+.lightbox-next { right: 14px; }
+@media (max-width: 700px) {
+  .gallery-masonry { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 200px; gap: 10px; }
+  .lightbox-prev { left: 6px; }
+  .lightbox-next { right: 6px; }
+}
+@media (max-width: 400px) {
+  .gallery-masonry { grid-template-columns: 1fr; grid-auto-rows: 240px; }
+}
+</style>
+</head><body><a href="../index.html#main" style="position:absolute;left:-9999px;top:0;background:#C9A84C;color:#0B1F3A;padding:8px 16px;z-index:9999;font-weight:600;border-radius:0 0 6px 6px;" onfocus="this.style.left='0'">Skip to main content</a>
+<nav id="main-nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo" aria-label="Hope Giving Ministry home">
+      <img src="../images/logo.png" alt="" class="nav-logo-img" width="40" height="40">
+      <div class="nav-logo-text">
+        <span class="nav-logo-name">Hope Giving Ministry</span>
+      </div>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="../index.html">Home</a></li>
+      <li class="nav-dropdown">
+        <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">About <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <ul class="nav-dropdown-menu" aria-label="About submenu">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="pastors.html">Meet the Pastors</a></li>
+          <li><a href="../index.html#vision">Vision &amp; Mission</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">Watch <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <ul class="nav-dropdown-menu" aria-label="Watch submenu">
+          <li><a href="sermons.html">Sermons</a></li>
+          <li><a href="livestream.html">Live Stream</a></li>
+          <li><a href="sermons.html#series">Series</a></li>
+        </ul>
+      </li>
+      <li><a href="events.html">Events</a></li>
+      <li class="nav-dropdown">
+        <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">Connect <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <ul class="nav-dropdown-menu" aria-label="Connect submenu">
+          <li><a href="prayer.html">Prayer Requests</a></li>
+          <li><a href="testimonies.html">Testimonies</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">Resources <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <ul class="nav-dropdown-menu" aria-label="Resources submenu">
+          <li><a href="blog.html">Blog &amp; Devotions</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="resources.html">Resources</a></li>
+        </ul>
+      </li>
+      <li><a href="livestream.html" style="display:flex;align-items:center;gap:6px;"><span class="live-badge"><span class="live-dot"></span>Live</span></a></li>
+      <li><a href="give.html" class="nav-cta">Give Now</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobile-nav" role="dialog" aria-label="Mobile navigation" aria-modal="true">
+  <ul class="mobile-nav-links" role="list">
+    <li><a href="../index.html">Home</a></li>
+    <li>
+      <button type="button" class="mobile-dropdown-toggle" aria-expanded="false">About</button>
+      <ul class="mobile-nav-sublinks" aria-hidden="true">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="pastors.html">Meet the Pastors</a></li>
+      </ul>
+    </li>
+    <li>
+      <button type="button" class="mobile-dropdown-toggle" aria-expanded="false">Watch</button>
+      <ul class="mobile-nav-sublinks" aria-hidden="true">
+        <li><a href="sermons.html">Sermons</a></li>
+        <li><a href="livestream.html">Live Stream</a></li>
+      </ul>
+    </li>
+    <li><a href="events.html">Events</a></li>
+    <li>
+      <button type="button" class="mobile-dropdown-toggle" aria-expanded="false">Connect</button>
+      <ul class="mobile-nav-sublinks" aria-hidden="true">
+        <li><a href="prayer.html">Prayer Requests</a></li>
+        <li><a href="testimonies.html">Testimonies</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </li>
+    <li>
+      <button type="button" class="mobile-dropdown-toggle" aria-expanded="false">Ministries</button>
+      <ul class="mobile-nav-sublinks" aria-hidden="true">
+        <li><a href="departments.html">Ministry Departments</a></li>
+        <li><a href="blog.html">Blog &amp; Daily Devotions</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="resources.html">Resources</a></li>
+      </ul>
+    </li>
+  </ul>
+  <a href="give.html" class="mobile-nav-give">Give / Donate</a>
+</div>
+
+<main id="main">
+<div id="lightbox" class="lightbox" role="dialog" aria-label="Image lightbox" aria-modal="true">
+  <button class="lightbox-close" aria-label="Close lightbox">&times;</button>
+  <button class="lightbox-nav lightbox-prev" aria-label="Previous image">&#8249;</button>
+  <button class="lightbox-nav lightbox-next" aria-label="Next image">&#8250;</button>
+  <div class="lightbox-inner">
+    <img id="lightbox-img" src="" alt="" />
+    <div class="lightbox-caption">
+      <div class="lightbox-caption-title"></div>
+      <div class="lightbox-caption-tag"></div>
+    </div>
+  </div>
+</div>
+
+<section class="page-hero">
+  <div class="page-hero-content">
+    <nav class="breadcrumb"><a href="../index.html">Home</a><span>/</span><span>Gallery</span></nav>
+    <h1 class="heading-xl page-hero-title">Ministry <em class="italic text-gold">Gallery</em></h1>
+    <p class="page-hero-sub">Moments of worship, community, outreach, and God's faithfulness captured through the lens.</p>
+  </div>
+</section>
+
+<section class="section section-dark">
+  <div class="container" style="max-width:1200px;">
+    <div class="section-header-row">
+      <div class="reveal"><div class="label">Gallery</div><h2 class="heading-xl">Moments That Matter</h2></div>
+      <div class="filter-group" style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="filter-btn active" data-filter="all" data-target="#gallery-masonry">All</button>
+        <button class="filter-btn" data-filter="worship">Worship</button>
+        <button class="filter-btn" data-filter="youth">Youth</button>
+        <button class="filter-btn" data-filter="outreach">Outreach</button>
+        <button class="filter-btn" data-filter="prayer">Prayer</button>
+        <button class="filter-btn" data-filter="community">Community</button>
+        <button class="filter-btn" data-filter="leadership">Leadership</button>
+      </div>
+    </div>
+    <div class="gallery-masonry">
+
+      <div class="gallery-item reveal reveal-delay-1" data-category="worship" data-src="../images/gallery/01-service.jpg" data-title="Sunday Celebration Service" data-tag="Worship">
+        <img src="../images/gallery/01-service.jpg" alt="Sunday Celebration Service" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-tag">Worship</span>
+          <div class="gallery-item-title">Sunday Celebration Service</div>
+          <div class="gallery-item-view">Click to view</div>
+        </div>
+      </div>
+
+      <div class="gallery-item reveal reveal-delay-1" data-category="youth" data-src="../images/gallery/02-youth.jpg" data-title="Youth Conference 2024" data-tag="Youth">
+        <img src="../images/gallery/02-youth.jpg" alt="Youth Conference 2024" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-tag">Youth</span>
+          <div class="gallery-item-title">Youth Conference 2024</div>
+          <div class="gallery-item-view">Click to view</div>
+        </div>
+      </div>
+
+      <div class="gallery-item reveal reveal-delay-2" data-category="prayer" data-src="../images/gallery/03-prayer.jpg" data-title="All-Night Prayer & Intercession" data-tag="Prayer">
+        <img src="../images/gallery/03-prayer.jpg" alt="All-Night Prayer" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-tag">Prayer</span>
+          <div class="gallery-item-title">All-Night Prayer & Intercession</div>
+          <div class="gallery-item-view">Click to view</div>
+        </div>
+      </div>
+
+      <div class="gallery-item reveal reveal-delay-2" data-category="worship" data-src="../images/gallery/04-women.jpg" data-title="Women's Conference 2024" data-tag="Women">
+        <img src="../images/gallery/04-women.jpg" alt="Women's Conference 2024" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-tag">Women</span>
+          <div class="gallery-item-title">Women's Conference 2024</div>
+          <div class="gallery-item-view">Click to view</div>
+        </div>
+      </div>
+
+      <div class="gallery-item reveal reveal-delay-3" data-category="outreach" data-src="../images/gallery/05-outreach.jpg" data-title="City Gospel Outreach" data-tag="Outreach">
+        <img src="../images/gallery/05-outreach.jpg" alt="City Gospel Outreach" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-tag">Outreach</span>
+          <div class="gallery-item-title">City Gospel Outreach</div>
+          <div class="gallery-item-view">Click to view</div>
+        </div>
+      </div>
+
+      <div class="gallery-item reveal reveal-delay-3" data-category="leadership" data-src="../images/gallery/06-baptism.jpg" data-title="Leadership Summit" data-tag="Leadership">
+        <img src="../images/gallery/06-baptism.jpg" alt="Leadership Summit" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-tag">Leadership</span>
+          <div class="gallery-item-title">Leadership Summit</div>
+          <div class="gallery-item-view">Click to view</div>
+        </div>
+      </div>
+
+      <div class="gallery-item reveal reveal-delay-4" data-category="outreach" data-src="../images/gallery/07-men.jpg" data-title="Men's Retreat 2024" data-tag="Men">
+        <img src="../images/gallery/07-men.jpg" alt="Men's Retreat 2024" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-tag">Men</span>
+          <div class="gallery-item-title">Men's Retreat 2024</div>
+          <div class="gallery-item-view">Click to view</div>
+        </div>
+      </div>
+
+      <div class="gallery-item reveal reveal-delay-4" data-category="worship" data-src="../images/gallery/08-children.jpg" data-title="Children's VBS � Summer 2024" data-tag="Children">
+        <img src="../images/gallery/08-children.jpg" alt="Children's VBS" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-tag">Children</span>
+          <div class="gallery-item-title">Children's VBS � Summer 2024</div>
+          <div class="gallery-item-view">Click to view</div>
+        </div>
+      </div>
+
+      <div class="gallery-item reveal reveal-delay-1" data-category="community" data-src="../images/gallery/09-missions.jpg" data-title="Missions Sunday" data-tag="Missions">
+        <img src="../images/gallery/09-missions.jpg" alt="Missions Sunday" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-tag">Missions</span>
+          <div class="gallery-item-title">Missions Sunday</div>
+          <div class="gallery-item-view">Click to view</div>
+        </div>
+      </div>
+
+      <div class="gallery-item reveal reveal-delay-1" data-category="worship" data-src="../images/gallery/10-worship.jpg" data-title="Worship Night" data-tag="Worship">
+        <img src="../images/gallery/10-worship.jpg" alt="Worship Night" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-tag">Worship</span>
+          <div class="gallery-item-title">Worship Night</div>
+          <div class="gallery-item-view">Click to view</div>
+        </div>
+      </div>
+
+      <div class="gallery-item reveal reveal-delay-2" data-category="community" data-src="../images/gallery/11-community.jpg" data-title="Community Outreach" data-tag="Community">
+        <img src="../images/gallery/11-community.jpg" alt="Community Outreach" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-tag">Community</span>
+          <div class="gallery-item-title">Community Outreach</div>
+          <div class="gallery-item-view">Click to view</div>
+        </div>
+      </div>
+
+      <div class="gallery-item reveal reveal-delay-2" data-category="leadership" data-src="../images/gallery/12-leadership.jpg" data-title="Baptism Sunday" data-tag="Baptism">
+        <img src="../images/gallery/12-leadership.jpg" alt="Baptism Sunday" loading="lazy">
+        <div class="gallery-item-overlay">
+          <span class="gallery-item-tag">Baptism</span>
+          <div class="gallery-item-title">Baptism Sunday</div>
+          <div class="gallery-item-view">Click to view</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+</main><footer class="site-footer"><div class="footer-grid"><div><a href="../index.html" class="footer-brand-logo" aria-label="Hope Giving Ministry home"><img src="../images/logo.png" alt="Hope Giving Ministry logo" width="48" height="48"></a><p class="footer-brand-name">Hope Giving Ministry</p><p class="footer-brand-text">Proclaiming the Gospel, restoring hope, and demonstrating God's love through practical ministry.</p></div><div><p class="footer-col-title">Ministry</p><ul class="footer-col-links"><li><a href="about.html">About Us</a></li><li><a href="pastors.html">Leadership</a></li><li><a href="departments.html">Departments</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="resources.html">Resources</a></li></ul></div><div><p class="footer-col-title">Connect</p><ul class="footer-col-links"><li><a href="sermons.html">Sermons</a></li><li><a href="livestream.html">Live Stream</a></li><li><a href="events.html">Events</a></li><li><a href="prayer.html">Prayer</a></li><li><a href="testimonies.html">Testimonies</a></li><li><a href="blog.html">Blog</a></li></ul></div><div><p class="footer-col-title">Contact</p><p style="font-size:13px;color:#9BA8BF;line-height:2;">123 Faith Avenue<br>Kigali, Rwanda<br><a href="mailto:info@hopegivingministry.org" style="color:#C9A84C;">info@hopegivingministry.org</a><br><a href="tel:+254700000000" style="color:#C9A84C;">+250 780 000 000</a></p></div></div><div class="footer-divider"></div><div class="footer-bottom"><p class="footer-copy">&copy; 2025 Hope Giving Ministry. All rights reserved.</p><p class="footer-verse">&ldquo;The Lord is my shepherd; I shall not want.&rdquo; &mdash; Psalm 23:1</p></div></footer><script src="../js/main.js"></script></body></html>

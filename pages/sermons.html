@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="../images/logo.png" type="image/png">
+<link rel="apple-touch-icon" href="../images/logo.png">
+<meta name="description" content="Hope Giving Ministry � Sermons">
+<title>Sermons � Hope Giving Ministry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/main.css">
+  <style>
+    .sermon-card {
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .sermon-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+    .sermon-thumb {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .sermon-thumb::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.3);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 1;
+    }
+    .sermon-thumb:hover::before { opacity: 1; }
+    .sermon-play {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 2;
+      transition: transform 0.3s ease;
+    }
+    .sermon-thumb:hover .sermon-play { transform: scale(1.1); }
+    .play-circle {
+      width: 56px; height: 56px;
+      background: rgba(255,255,255,0.95);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+    }
+    .sermon-thumb:hover .play-circle {
+      background: var(--gold);
+      transform: scale(1.1);
+    }
+    .play-circle svg { margin-left: 3px; }
+    .sermon-actions {
+      display: flex; gap: 8px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: all 0.3s ease;
+    }
+    .sermon-card:hover .sermon-actions {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Video Modal */
+    .video-modal {
+      position: fixed; inset: 0; z-index: 10000;
+      background: rgba(0,0,0,0.9);
+      backdrop-filter: blur(10px);
+      display: none; align-items: center; justify-content: center;
+      padding: 40px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .video-modal.open {
+      display: flex;
+      opacity: 1;
+    }
+    .video-modal-inner {
+      position: relative;
+      width: 100%; max-width: 900px;
+      aspect-ratio: 16/9;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+      transform: scale(0.95);
+      transition: transform 0.3s ease;
+    }
+    .video-modal.open .video-modal-inner {
+      transform: scale(1);
+    }
+    .video-modal-inner iframe {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; border: 0;
+    }
+    .video-modal-close {
+      position: absolute; top: -50px; right: 0;
+      width: 40px; height: 40px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white; border-radius: 50%;
+      font-size: 20px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .video-modal-close:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--navy);
+    }
+    .video-modal-overlay {
+      position: absolute; inset: 0;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .sermon-card {
+        flex-direction: column !important;
+      }
+      .sermon-thumb {
+        width: 100% !important;
+        min-height: 200px !important;
+      }
+      .sermon-actions {
+        opacity: 1;
+        transform: none;
+      }
+      .video-modal { padding: 20px; }
+      .video-modal-close { top: -45px; right: 0; }
+    }
+  </style>
+</head>
+<body>
+<a href="../index.html#main" style="position:absolute;left:-9999px;top:0;background:#C9A84C;color:#0B1F3A;padding:8px 16px;z-index:9999;font-weight:600;border-radius:0 0 6px 6px;" onfocus="this.style.left='0'">Skip to main content</a>
+<nav id="main-nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo" aria-label="Hope Giving Ministry home">
+      <img src="../images/logo.png" alt="" class="nav-logo-img" width="40" height="40">
+      <div class="nav-logo-text">
+        <span class="nav-logo-name">Hope Giving Ministry</span>
+      </div>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="../index.html">Home</a></li>
+      <li class="nav-dropdown">
+        <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">About <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <ul class="nav-dropdown-menu" aria-label="About submenu">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="pastors.html">Meet the Pastors</a></li>
+          <li><a href="../index.html#vision">Vision &amp; Mission</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">Watch <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <ul class="nav-dropdown-menu" aria-label="Watch submenu">
+          <li><a href="sermons.html">Sermons</a></li>
+          <li><a href="livestream.html">Live Stream</a></li>
+          <li><a href="sermons.html#series">Series</a></li>
+        </ul>
+      </li>
+      <li><a href="events.html">Events</a></li>
+      <li class="nav-dropdown">
+        <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">Connect <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <ul class="nav-dropdown-menu" aria-label="Connect submenu">
+          <li><a href="prayer.html">Prayer Requests</a></li>
+          <li><a href="testimonies.html">Testimonies</a></li>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+      </li>
+      <li class="nav-dropdown">
+        <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-haspopup="true">Resources <svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <ul class="nav-dropdown-menu" aria-label="Resources submenu">
+          <li><a href="blog.html">Blog &amp; Devotions</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="resources.html">Resources</a></li>
+        </ul>
+      </li>
+      <li><a href="livestream.html" style="display:flex;align-items:center;gap:6px;"><span class="live-badge"><span class="live-dot"></span>Live</span></a></li>
+      <li><a href="give.html" class="nav-cta">Give Now</a></li>
+    </ul>
+    <button class="nav-hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobile-nav" role="dialog" aria-label="Mobile navigation" aria-modal="true">
+  <ul class="mobile-nav-links" role="list">
+    <li><a href="../index.html">Home</a></li>
+    <li>
+      <button type="button" class="mobile-dropdown-toggle" aria-expanded="false">About</button>
+      <ul class="mobile-nav-sublinks" aria-hidden="true">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="pastors.html">Meet the Pastors</a></li>
+      </ul>
+    </li>
+    <li>
+      <button type="button" class="mobile-dropdown-toggle" aria-expanded="false">Watch</button>
+      <ul class="mobile-nav-sublinks" aria-hidden="true">
+        <li><a href="sermons.html">Sermons</a></li>
+        <li><a href="livestream.html">Live Stream</a></li>
+      </ul>
+    </li>
+    <li><a href="events.html">Events</a></li>
+    <li>
+      <button type="button" class="mobile-dropdown-toggle" aria-expanded="false">Connect</button>
+      <ul class="mobile-nav-sublinks" aria-hidden="true">
+        <li><a href="prayer.html">Prayer Requests</a></li>
+        <li><a href="testimonies.html">Testimonies</a></li>
+        <li><a href="contact.html">Contact Us</a></li>
+      </ul>
+    </li>
+    <li>
+      <button type="button" class="mobile-dropdown-toggle" aria-expanded="false">Ministries</button>
+      <ul class="mobile-nav-sublinks" aria-hidden="true">
+        <li><a href="departments.html">Ministry Departments</a></li>
+        <li><a href="blog.html">Blog &amp; Daily Devotions</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="resources.html">Resources</a></li>
+      </ul>
+    </li>
+  </ul>
+  <a href="give.html" class="mobile-nav-give">Give / Donate</a>
+</div>
+
+<main id="main">
+
+<section class="page-hero">
+  <div class="page-hero-content">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Home</a><span>/</span><span>Sermons</span></nav>
+    <h1 class="heading-xl page-hero-title">Sermons &amp; <em class="italic text-gold">Messages</em></h1>
+    <p class="page-hero-sub">Spirit-filled messages that challenge, encourage, and transform. Listen at your own pace, anytime.</p>
+  </div>
+</section>
+
+<section class="section section-light" id="series">
+  <div class="container" style="max-width:1120px;">
+    <div style="display:flex;justify-content:space-between;gap:18px;align-items:flex-end;flex-wrap:wrap;margin-bottom:26px;">
+      <div>
+        <div class="label label-dark">Sermons & Messages</div>
+        <h2 class="heading-lg" style="color:var(--navy);margin-bottom:8px;">Watch Recent Messages</h2>
+        <p class="body-md" style="color:#4B5F78;max-width:620px;">Tap any message to watch. The layout is built for phones first, with clear titles, series, and share actions.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;margin-bottom:24px;" class="filter-group" aria-label="Sermon filters">
+      <button class="filter-btn active btn btn-sm btn-royal" data-filter="all" data-target=".sermons-list">All</button>
+      <button class="filter-btn btn btn-sm btn-outline-dark" data-filter="gospel" data-target=".sermons-list">Gospel</button>
+      <button class="filter-btn btn btn-sm btn-outline-dark" data-filter="faith" data-target=".sermons-list">Faith</button>
+      <button class="filter-btn btn btn-sm btn-outline-dark" data-filter="prayer" data-target=".sermons-list">Prayer</button>
+    </div>
+
+    <div class="sermons-list" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;">
+      <article class="sermon-card card-light reveal" data-series="gospel" data-video="https://www.youtube-nocookie.com/embed/bba2Dqaw6SI" data-title="The Cross and New Life" style="overflow:hidden;border-radius:14px;cursor:pointer;">
+        <div class="sermon-thumb" style="aspect-ratio:16/9;background:linear-gradient(135deg,#1B4B9E,#0B1F3A);display:flex;align-items:center;justify-content:center;">
+          <div class="sermon-play"><div class="play-circle"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M8 5v14l11-7z" fill="#1B4B9E"/></svg></div></div>
+        </div>
+        <div style="padding:18px;">
+          <span class="tag tag-royal">Gospel</span>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:700;color:var(--navy);margin:12px 0 6px;line-height:1.15;">The Cross and New Life</h3>
+          <p style="font-size:13px;color:#6B7A8F;line-height:1.6;">A clear message of salvation, hope, repentance, and the finished work of Christ.</p>
+          <div style="display:flex;gap:8px;margin-top:16px;">
+            <button type="button" class="btn btn-sm btn-royal" style="flex:1;justify-content:center;">Play</button>
+            <button type="button" class="btn btn-sm btn-outline-dark" data-share-page>Share</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="sermon-card card-light reveal" data-series="faith" data-video="https://www.youtube-nocookie.com/embed/M7lc1UVf-VE" data-title="Faith That Keeps Moving" style="overflow:hidden;border-radius:14px;cursor:pointer;">
+        <div class="sermon-thumb" style="aspect-ratio:16/9;background:linear-gradient(135deg,#0F6E56,#0B1F3A);display:flex;align-items:center;justify-content:center;">
+          <div class="sermon-play"><div class="play-circle"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M8 5v14l11-7z" fill="#0F6E56"/></svg></div></div>
+        </div>
+        <div style="padding:18px;">
+          <span class="tag tag-green">Faith</span>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:700;color:var(--navy);margin:12px 0 6px;line-height:1.15;">Faith That Keeps Moving</h3>
+          <p style="font-size:13px;color:#6B7A8F;line-height:1.6;">Encouragement for believers learning to trust God in ordinary obedience.</p>
+          <div style="display:flex;gap:8px;margin-top:16px;">
+            <button type="button" class="btn btn-sm btn-royal" style="flex:1;justify-content:center;">Play</button>
+            <button type="button" class="btn btn-sm btn-outline-dark" data-share-page>Share</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="sermon-card card-light reveal" data-series="prayer" data-video="https://www.youtube-nocookie.com/embed/ysz5S6PUM-U" data-title="The Power of Persistent Prayer" style="overflow:hidden;border-radius:14px;cursor:pointer;">
+        <div class="sermon-thumb" style="aspect-ratio:16/9;background:linear-gradient(135deg,#854F0B,#0B1F3A);display:flex;align-items:center;justify-content:center;">
+          <div class="sermon-play"><div class="play-circle"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M8 5v14l11-7z" fill="#854F0B"/></svg></div></div>
+        </div>
+        <div style="padding:18px;">
+          <span class="tag tag-gold">Prayer</span>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:23px;font-weight:700;color:var(--navy);margin:12px 0 6px;line-height:1.15;">The Power of Persistent Prayer</h3>
+          <p style="font-size:13px;color:#6B7A8F;line-height:1.6;">A practical word on praying with patience, confidence, and surrender.</p>
+          <div style="display:flex;gap:8px;margin-top:16px;">
+            <button type="button" class="btn btn-sm btn-royal" style="flex:1;justify-content:center;">Play</button>
+            <button type="button" class="btn btn-sm btn-outline-dark" data-share-page>Share</button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Video Modal -->
+<div class="video-modal" id="videoModal" role="dialog" aria-label="Video player" aria-modal="true">
+  <div class="video-modal-inner">
+    <button class="video-modal-close" aria-label="Close video player">&times;</button>
+    <iframe id="videoModalFrame" src="" title="Sermon video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+</div>
+
+</main>
+<footer class="site-footer"><div class="footer-grid"><div><a href="../index.html" class="footer-brand-logo" aria-label="Hope Giving Ministry home"><img src="../images/logo.png" alt="Hope Giving Ministry logo" width="48" height="48"></a><p class="footer-brand-name">Hope Giving Ministry</p><p class="footer-brand-text">Proclaiming the Gospel, restoring hope, discipling believers, and demonstrating God's love through practical ministry.</p><div class="footer-socials"><a href="#" class="social-btn" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.8"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a><a href="#" class="social-btn" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.8"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="rgba(255,255,255,0.55)" stroke="none"/></svg></a><a href="#" class="social-btn" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/></svg></a><a href="#" class="social-btn" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.55)" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a></div></div><div><p class="footer-col-title">Ministry</p><ul class="footer-col-links"><li><a href="about.html">About Us</a></li><li><a href="pastors.html">Meet The Pastors</a></li><li><a href="departments.html">Departments</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="resources.html">Resources</a></li></ul></div><div><p class="footer-col-title">Connect</p><ul class="footer-col-links"><li><a href="sermons.html">Sermons</a></li><li><a href="livestream.html">Live Stream</a></li><li><a href="events.html">Events</a></li><li><a href="prayer.html">Prayer Requests</a></li><li><a href="testimonies.html">Testimonies</a></li><li><a href="blog.html">Blog &amp; Devotions</a></li></ul></div><div><p class="footer-col-title">Contact</p><p style="font-size:13px;color:#9BA8BF;line-height:2;">123 Faith Avenue<br>Kigali, Rwanda<br><a href="mailto:info@hopegivingministry.org" style="color:#C9A84C;">info@hopegivingministry.org</a><br><a href="tel:+254700000000" style="color:#C9A84C;">+250 780 000 000</a></p></div></div><div class="footer-divider"></div><div class="footer-bottom"><p class="footer-copy">&copy; 2025 Hope Giving Ministry. All rights reserved.</p><p class="footer-verse">&ldquo;The Lord is my shepherd; I shall not want.&rdquo; &mdash; Psalm 23:1</p></div></footer>
+<script src='../js/main.js'></script></body></html>
