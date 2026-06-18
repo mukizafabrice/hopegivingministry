@@ -117,13 +117,13 @@
   <div class="page-hero-content">
     <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Home</a><span>/</span><span>Live Stream</span></nav>
     <h1 class="heading-xl page-hero-title">Watch <em class="italic text-gold">Live</em></h1>
-    <p class="page-hero-sub">Join thousands watching online — every Sunday at 9:00 AM and 11:30 AM EAT.</p>
+    <p class="page-hero-sub">One shared stream for every visitor, built to stay clear and easy on small screens.</p>
   </div>
 </section>
 
 <section class="section section-dark" style="padding-top:40px;">
   <div class="container" style="max-width:1100px;">
-    <div class="stream-layout" style="display:grid;grid-template-columns:2fr 1fr;gap:40px;align-items:start;">
+    <div class="stream-layout">
       <div>
         <div class="stream-embed reveal">
           <div id="stream-offline-view" style="position:absolute;inset:0;background:linear-gradient(135deg,var(--navy-mid),var(--royal));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;">
@@ -151,9 +151,8 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
             Set Reminder
           </button>
-          <button type="button" id="share-stream-btn" class="btn btn-outline" aria-label="Share live stream">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-            Share
+          <button type="button" id="share-stream-btn" class="btn btn-outline icon-action" aria-label="Share live stream" title="Share live stream">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
           </button>
           <a href="sermons.html" class="btn btn-outline">Watch Past Sermons →</a>
         </div>
@@ -162,52 +161,17 @@
         </div>
       </div>
       <div>
-        <h3 class="heading-md reveal" style="margin-bottom:24px;">Service Schedule</h3>
-        <div style="display:flex;flex-direction:column;gap:14px;">
-
-          <div class="card reveal reveal-delay-1">
-            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:6px;">
-              <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);">Sunday</span>
-              <span class="tag tag-gold" style="font-size:9px;">Weekly</span>
-            </div>
-            <p style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:white;margin-bottom:4px;">Celebration Service</p>
-            <p style="font-size:13px;color:var(--text-muted);">9:00 AM & 11:30 AM EAT</p>
+        <div class="stream-support">
+          <div class="stream-support-card reveal reveal-delay-1" style="background:rgba(201,168,76,0.08);border-color:rgba(201,168,76,0.18);">
+            <div class="label" style="margin-bottom:10px;color:var(--gold-light);">After Service</div>
+            <h3 class="heading-md" style="margin-bottom:10px;">Catch the message again anytime.</h3>
+            <p class="body-sm" style="color:var(--text-light);">Your visitors can jump straight into the sermon library when the live stream is over.</p>
+            <a href="sermons.html" class="btn btn-gold btn-sm" style="margin-top:16px;">Open Sermons</a>
           </div>
-
-
-          <div class="card reveal reveal-delay-2">
-            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:6px;">
-              <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);">Wednesday</span>
-              <span class="tag tag-gold" style="font-size:9px;">Weekly</span>
-            </div>
-            <p style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:white;margin-bottom:4px;">Mid-Week Bible Study</p>
-            <p style="font-size:13px;color:var(--text-muted);">6:30 PM EAT</p>
+          <div class="stream-support-card reveal reveal-delay-2">
+            <p style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold-light);margin-bottom:8px;">"Where two or three gather in my name, there am I with them."</p>
+            <p style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);">Matthew 18:20</p>
           </div>
-
-
-          <div class="card reveal reveal-delay-3">
-            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:6px;">
-              <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);">Friday</span>
-              <span class="tag tag-gold" style="font-size:9px;">Weekly</span>
-            </div>
-            <p style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:white;margin-bottom:4px;">Youth Night</p>
-            <p style="font-size:13px;color:var(--text-muted);">5:00 PM EAT</p>
-          </div>
-
-
-          <div class="card reveal reveal-delay-4">
-            <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:6px;">
-              <span style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);">Last Friday</span>
-              <span class="tag tag-gold" style="font-size:9px;">Monthly</span>
-            </div>
-            <p style="font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:white;margin-bottom:4px;">All-Night Prayer</p>
-            <p style="font-size:13px;color:var(--text-muted);">10:00 PM — 5:00 AM</p>
-          </div>
-
-        </div>
-        <div class="card" style="margin-top:20px;background:rgba(201,168,76,0.08);border-color:rgba(201,168,76,0.2);">
-          <p style="font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--gold-light);margin-bottom:8px;">"Where two or three gather in my name, there am I with them."</p>
-          <p style="font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);">Matthew 18:20</p>
         </div>
       </div>
     </div>

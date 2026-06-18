@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const STORAGE_KEY = 'hgmLiveStream';
   const LIVE_WINDOW_MS = 12 * 60 * 60 * 1000;
+  const defaultState = { enabled: false, url: '', updatedAt: 0 };
   const ADMIN_USER = 'admin';
   const ADMIN_PASSWORDS = new Set(['admin', 'hope2026', 'Hope2026']);
 
@@ -22,62 +22,140 @@ document.addEventListener('DOMContentLoaded', () => {
   const liveView = document.getElementById('stream-live-view');
   const reminderBtn = document.getElementById('reminder-btn');
 
-  const readState = () => {
+  const isAdminSignedIn = () => sessionStorage.getItem('hgmAdmin') === '1';
+
+  const downloadStateFile = (state) => {
+    const json = `${JSON.stringify(state, null, 2)}\n`;
+    const blob = new Blob([json], { type: 'application/json' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'live.json';
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+  };
+
+  const loadState = async () => {
     try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+      const response = await fetch(`../js/live.json?t=${Date.now()}`, { cache: 'no-store' });
+      if (!response.ok) throw new Error('Live state unavailable.');
+      return { ...defaultState, ...(await response.json()) };
     } catch {
-      return {};
+      return defaultState;
     }
   };
 
-  const writeState = (state) => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  const normalizeInputUrl = (value) => {
+    if (!value) return '';
+    try {
+      const parsed = new URL(value);
+      if (!['http:', 'https:'].includes(parsed.protocol)) throw new Error();
+      return parsed.href;
+    } catch {
+      throw new Error('Enter a valid http(s) stream URL.');
+    }
   };
 
-  const isLive = (state) => Boolean(state.url && state.enabled && Date.now() - Number(state.updatedAt || 0) < LIVE_WINDOW_MS);
+  const isLive = (state) => Boolean(
+    state.enabled &&
+    state.url &&
+    Date.now() - Number(state.updatedAt || 0) < LIVE_WINDOW_MS
+  );
 
   const toEmbedUrl = (url) => {
     try {
       const parsed = new URL(url);
-      let id = '';
-      if (parsed.hostname.includes('youtu.be')) id = parsed.pathname.replace('/', '');
-      if (parsed.hostname.includes('youtube.com')) id = parsed.searchParams.get('v') || parsed.pathname.split('/').pop();
-      if (!id) return url;
-      return `https://www.youtube-nocookie.com/embed/${id}`;
+      const host = parsed.hostname.toLowerCase();
+
+      if (host === 'youtu.be') {
+        const id = decodeURIComponent(parsed.pathname.replace(/^\//, ''));
+        if (id) return `https://www.youtube-nocookie.com/embed/${id}`;
+      }
+
+      if (host === 'youtube.com' || host === 'www.youtube.com' || host === 'youtube-nocookie.com' || host === 'www.youtube-nocookie.com') {
+        const pathParts = parsed.pathname.split('/').filter(Boolean);
+        const id = parsed.searchParams.get('v') || pathParts[pathParts.length - 1];
+        if (id && /^[A-Za-z0-9_-]{6,}$/.test(id)) {
+          return `https://www.youtube-nocookie.com/embed/${id}`;
+        }
+      }
+
+      return parsed.href;
     } catch {
       return url;
     }
   };
 
-  const updateLiveView = () => {
-    const state = readState();
-    const active = isLive(state);
+  const setBusy = (button, busy) => {
+    if (!button) return;
+    button.disabled = busy;
+    button.style.opacity = busy ? '0.65' : '';
+  };
 
-    if (offlineView) offlineView.style.display = active ? 'none' : 'flex';
-    if (liveView) {
-      liveView.style.display = active ? 'block' : 'none';
-      liveView.innerHTML = active
-        ? `<iframe src="${toEmbedUrl(state.url)}" title="Hope Giving Ministry live stream" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe>`
-        : '';
-    }
+  const showStatus = (message, type = 'ok') => {
+    if (!statusMsg) return;
+    statusMsg.textContent = message;
+    statusMsg.style.display = 'block';
+    statusMsg.style.color = type === 'error' ? '#e07a7a' : '#E8C97A';
+  };
 
+  const updateNavPill = (active) => {
     document.querySelectorAll('.nav-links a').forEach(link => {
       if (!link.querySelector('.live-badge')) return;
       const item = link.closest('li');
       if (item) item.style.display = active ? '' : 'none';
     });
+  };
 
+  const syncAdminFields = (state) => {
     if (liveToggle) liveToggle.checked = Boolean(state.enabled);
     if (urlInput) urlInput.value = state.url || '';
   };
 
-  const openModal = () => {
+  const updateLiveView = async () => {
+    const state = await loadState();
+    const active = isLive(state);
+
+    if (offlineView) offlineView.style.display = active ? 'none' : 'flex';
+
+    if (liveView) {
+      liveView.replaceChildren();
+      liveView.style.display = active ? 'block' : 'none';
+
+      if (active) {
+        const iframe = document.createElement('iframe');
+        iframe.src = toEmbedUrl(state.url);
+        iframe.title = 'Hope Giving Ministry live stream';
+        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:0;';
+        liveView.appendChild(iframe);
+      }
+    }
+
+    updateNavPill(active);
+    syncAdminFields(state);
+  };
+
+  const showLogin = () => {
+    loginStep.style.display = 'block';
+    manageStep.style.display = 'none';
+  };
+
+  const showManage = () => {
+    loginStep.style.display = 'none';
+    manageStep.style.display = 'block';
+  };
+
+  const openModal = async () => {
     if (!modal) return;
     modal.style.display = 'flex';
-    loginStep.style.display = sessionStorage.getItem('hgmAdmin') === '1' ? 'none' : 'block';
-    manageStep.style.display = sessionStorage.getItem('hgmAdmin') === '1' ? 'block' : 'none';
-    updateLiveView();
-    setTimeout(() => (sessionStorage.getItem('hgmAdmin') === '1' ? urlInput : usernameInput)?.focus(), 50);
+    if (isAdminSignedIn()) {
+      showManage();
+    } else {
+      showLogin();
+    }
+    await updateLiveView();
+    setTimeout(() => (isAdminSignedIn() ? urlInput : usernameInput)?.focus(), 50);
   };
 
   const closeModal = () => {
@@ -93,50 +171,74 @@ document.addEventListener('DOMContentLoaded', () => {
   modal?.addEventListener('click', (event) => {
     if (event.target === modal) closeModal();
   });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && modal?.style.display === 'flex') closeModal();
+  });
 
-  loginForm?.addEventListener('submit', (event) => {
+  loginForm?.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const valid = usernameInput.value.trim().toLowerCase() === ADMIN_USER && ADMIN_PASSWORDS.has(passwordInput.value);
-    if (!valid) {
-      loginError.textContent = 'Invalid username or password.';
-      loginError.style.display = 'block';
-      return;
-    }
-    sessionStorage.setItem('hgmAdmin', '1');
+    const loginButton = loginForm.querySelector('button[type="submit"]');
+    setBusy(loginButton, true);
     loginError.style.display = 'none';
-    loginStep.style.display = 'none';
-    manageStep.style.display = 'block';
-    updateLiveView();
+
+    try {
+      const valid = usernameInput.value.trim().toLowerCase() === ADMIN_USER && ADMIN_PASSWORDS.has(passwordInput.value);
+      if (!valid) throw new Error('Invalid username or password.');
+      sessionStorage.setItem('hgmAdmin', '1');
+      passwordInput.value = '';
+      showManage();
+      showStatus('Logged in.', 'ok');
+      await updateLiveView();
+    } catch (error) {
+      loginError.textContent = error.message || 'Invalid username or password.';
+      loginError.style.display = 'block';
+    } finally {
+      setBusy(loginButton, false);
+    }
   });
 
-  saveBtn?.addEventListener('click', () => {
-    const url = urlInput.value.trim();
-    if (liveToggle.checked && !url) {
-      statusMsg.textContent = 'Add a stream URL before turning live on.';
-      statusMsg.style.display = 'block';
-      statusMsg.style.color = '#e07a7a';
+  saveBtn?.addEventListener('click', async () => {
+    if (!isAdminSignedIn()) {
+      showLogin();
+      showStatus('Please log in again before saving.', 'error');
       return;
     }
 
-    writeState({
-      enabled: liveToggle.checked,
-      url,
-      updatedAt: Date.now()
-    });
+    let url = '';
+    try {
+      url = normalizeInputUrl(urlInput.value.trim());
+    } catch (error) {
+      showStatus(error.message, 'error');
+      return;
+    }
 
-    statusMsg.textContent = liveToggle.checked
-      ? 'Live stream updated. The Live nav pill will show for 12 hours.'
-      : 'Live stream turned off.';
-    statusMsg.style.display = 'block';
-    statusMsg.style.color = '#E8C97A';
-    updateLiveView();
+    if (liveToggle.checked && !url) {
+      showStatus('Add a stream URL before turning live on.', 'error');
+      return;
+    }
+
+    setBusy(saveBtn, true);
+
+    try {
+      downloadStateFile({
+        enabled: liveToggle.checked,
+        url,
+        updatedAt: Date.now()
+      });
+      showStatus('Updated live.json downloaded. Replace js/live.json on the site so every visitor sees it.', 'ok');
+      await updateLiveView();
+    } catch (error) {
+      showStatus(error.message, 'error');
+    } finally {
+      setBusy(saveBtn, false);
+    }
   });
 
-  logoutBtn?.addEventListener('click', () => {
+  logoutBtn?.addEventListener('click', async () => {
     sessionStorage.removeItem('hgmAdmin');
     passwordInput.value = '';
-    loginStep.style.display = 'block';
-    manageStep.style.display = 'none';
+    showLogin();
+    showStatus('Logged out.', 'ok');
   });
 
   reminderBtn?.addEventListener('click', () => {
@@ -146,4 +248,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   updateLiveView();
+  setInterval(() => {
+    if (!document.hidden) updateLiveView();
+  }, 30000);
 });

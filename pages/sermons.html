@@ -229,30 +229,28 @@
   <div class="page-hero-content">
     <nav class="breadcrumb" aria-label="Breadcrumb"><a href="../index.html">Home</a><span>/</span><span>Sermons</span></nav>
     <h1 class="heading-xl page-hero-title">Sermons &amp; <em class="italic text-gold">Messages</em></h1>
-    <p class="page-hero-sub">Spirit-filled messages that challenge, encourage, and transform. Listen at your own pace, anytime.</p>
+    <p class="page-hero-sub">Tap a sermon, watch it in the player, and move through the library without filters getting in the way.</p>
   </div>
 </section>
 
 <section class="section section-light" id="series">
   <div class="container" style="max-width:1120px;">
-    <div style="display:flex;justify-content:space-between;gap:18px;align-items:flex-end;flex-wrap:wrap;margin-bottom:26px;">
+    <div class="sermon-list-intro">
       <div>
         <div class="label label-dark">Sermons & Messages</div>
         <h2 class="heading-lg" style="color:var(--navy);margin-bottom:8px;">Watch Recent Messages</h2>
-        <p class="body-md" style="color:#4B5F78;max-width:620px;">Tap any message to watch. The layout is built for phones first, with clear titles, series, and share actions.</p>
+        <p class="body-md" style="color:#4B5F78;max-width:620px;">The sermon cards are now built around the actual YouTube videos, so visitors can choose a message with one tap.</p>
+      </div>
+      <div class="event-spotlight reveal reveal-delay-1">
+        <div class="label label-dark" style="margin-bottom:10px;">Latest</div>
+        <h3 class="heading-md" style="color:var(--navy);margin-bottom:8px;">A quick watch experience</h3>
+        <p class="body-sm" style="color:#4B5F78;">No filter tabs, no clutter. The page stays focused on the videos themselves.</p>
       </div>
     </div>
 
-    <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;margin-bottom:24px;" class="filter-group" aria-label="Sermon filters">
-      <button class="filter-btn active btn btn-sm btn-royal" data-filter="all" data-target=".sermons-list">All</button>
-      <button class="filter-btn btn btn-sm btn-outline-dark" data-filter="gospel" data-target=".sermons-list">Gospel</button>
-      <button class="filter-btn btn btn-sm btn-outline-dark" data-filter="faith" data-target=".sermons-list">Faith</button>
-      <button class="filter-btn btn btn-sm btn-outline-dark" data-filter="prayer" data-target=".sermons-list">Prayer</button>
-    </div>
-
-    <div class="sermons-list" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;">
+    <div class="sermon-grid">
       <article class="sermon-card card-light reveal" data-series="gospel" data-video="https://www.youtube-nocookie.com/embed/bba2Dqaw6SI" data-title="The Cross and New Life" style="overflow:hidden;border-radius:14px;cursor:pointer;">
-        <div class="sermon-thumb" style="aspect-ratio:16/9;background:linear-gradient(135deg,#1B4B9E,#0B1F3A);display:flex;align-items:center;justify-content:center;">
+        <div class="sermon-thumb" style="aspect-ratio:16/9;background:linear-gradient(135deg,#1B4B9E,#0B1F3A);background-image:url('https://img.youtube.com/vi/bba2Dqaw6SI/hqdefault.jpg');background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;">
           <div class="sermon-play"><div class="play-circle"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M8 5v14l11-7z" fill="#1B4B9E"/></svg></div></div>
         </div>
         <div style="padding:18px;">
@@ -261,13 +259,15 @@
           <p style="font-size:13px;color:#6B7A8F;line-height:1.6;">A clear message of salvation, hope, repentance, and the finished work of Christ.</p>
           <div style="display:flex;gap:8px;margin-top:16px;">
             <button type="button" class="btn btn-sm btn-royal" style="flex:1;justify-content:center;">Play</button>
-            <button type="button" class="btn btn-sm btn-outline-dark" data-share-page>Share</button>
+            <button type="button" class="btn btn-sm btn-outline-dark icon-action" data-share-page aria-label="Share sermon" title="Share sermon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            </button>
           </div>
         </div>
       </article>
 
       <article class="sermon-card card-light reveal" data-series="faith" data-video="https://www.youtube-nocookie.com/embed/M7lc1UVf-VE" data-title="Faith That Keeps Moving" style="overflow:hidden;border-radius:14px;cursor:pointer;">
-        <div class="sermon-thumb" style="aspect-ratio:16/9;background:linear-gradient(135deg,#0F6E56,#0B1F3A);display:flex;align-items:center;justify-content:center;">
+        <div class="sermon-thumb" style="aspect-ratio:16/9;background:linear-gradient(135deg,#0F6E56,#0B1F3A);background-image:url('https://img.youtube.com/vi/M7lc1UVf-VE/hqdefault.jpg');background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;">
           <div class="sermon-play"><div class="play-circle"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M8 5v14l11-7z" fill="#0F6E56"/></svg></div></div>
         </div>
         <div style="padding:18px;">
@@ -276,13 +276,15 @@
           <p style="font-size:13px;color:#6B7A8F;line-height:1.6;">Encouragement for believers learning to trust God in ordinary obedience.</p>
           <div style="display:flex;gap:8px;margin-top:16px;">
             <button type="button" class="btn btn-sm btn-royal" style="flex:1;justify-content:center;">Play</button>
-            <button type="button" class="btn btn-sm btn-outline-dark" data-share-page>Share</button>
+            <button type="button" class="btn btn-sm btn-outline-dark icon-action" data-share-page aria-label="Share sermon" title="Share sermon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            </button>
           </div>
         </div>
       </article>
 
       <article class="sermon-card card-light reveal" data-series="prayer" data-video="https://www.youtube-nocookie.com/embed/ysz5S6PUM-U" data-title="The Power of Persistent Prayer" style="overflow:hidden;border-radius:14px;cursor:pointer;">
-        <div class="sermon-thumb" style="aspect-ratio:16/9;background:linear-gradient(135deg,#854F0B,#0B1F3A);display:flex;align-items:center;justify-content:center;">
+        <div class="sermon-thumb" style="aspect-ratio:16/9;background:linear-gradient(135deg,#854F0B,#0B1F3A);background-image:url('https://img.youtube.com/vi/ysz5S6PUM-U/hqdefault.jpg');background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;">
           <div class="sermon-play"><div class="play-circle"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M8 5v14l11-7z" fill="#854F0B"/></svg></div></div>
         </div>
         <div style="padding:18px;">
@@ -291,7 +293,9 @@
           <p style="font-size:13px;color:#6B7A8F;line-height:1.6;">A practical word on praying with patience, confidence, and surrender.</p>
           <div style="display:flex;gap:8px;margin-top:16px;">
             <button type="button" class="btn btn-sm btn-royal" style="flex:1;justify-content:center;">Play</button>
-            <button type="button" class="btn btn-sm btn-outline-dark" data-share-page>Share</button>
+            <button type="button" class="btn btn-sm btn-outline-dark icon-action" data-share-page aria-label="Share sermon" title="Share sermon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            </button>
           </div>
         </div>
       </article>

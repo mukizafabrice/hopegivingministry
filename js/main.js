@@ -78,20 +78,25 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Show the nav Live pill only for 12 hours after an admin stream URL update.
-  const getLiveState = () => {
+  const getLiveState = async () => {
+    const liveWindowMs = 12 * 60 * 60 * 1000;
     try {
-      const state = JSON.parse(localStorage.getItem('hgmLiveStream') || '{}');
+      const response = await fetch(`../js/live.json?t=${Date.now()}`, { cache: 'no-store' });
+      if (!response.ok) return false;
+      const state = await response.json();
       const updatedAt = Number(state.updatedAt || 0);
-      return Boolean(state.url && Date.now() - updatedAt < 12 * 60 * 60 * 1000);
+      return Boolean(state.enabled && state.url && Date.now() - updatedAt < liveWindowMs);
     } catch {
       return false;
     }
   };
 
-  document.querySelectorAll('.nav-links a').forEach(link => {
-    if (!link.querySelector('.live-badge')) return;
-    const item = link.closest('li');
-    if (item) item.style.display = getLiveState() ? '' : 'none';
+  getLiveState().then(active => {
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      if (!link.querySelector('.live-badge')) return;
+      const item = link.closest('li');
+      if (item) item.style.display = active ? '' : 'none';
+    });
   });
 
   // Native share where available, clipboard fallback everywhere else.
@@ -104,13 +109,100 @@ document.addEventListener('DOMContentLoaded', () => {
           await navigator.share({ title, url });
         } else if (navigator.clipboard) {
           await navigator.clipboard.writeText(url);
-          btn.dataset.originalHtml ||= btn.innerHTML;
-          btn.textContent = 'Link Copied';
-          setTimeout(() => { btn.innerHTML = btn.dataset.originalHtml; }, 1800);
+          const originalLabel = btn.getAttribute('aria-label') || 'Share link';
+          btn.dataset.originalLabel ||= originalLabel;
+          btn.setAttribute('aria-label', 'Link copied');
+          btn.title = 'Link copied';
+          btn.dataset.copied = '1';
+          setTimeout(() => {
+            btn.setAttribute('aria-label', btn.dataset.originalLabel || originalLabel);
+            btn.title = btn.dataset.originalLabel || originalLabel;
+            delete btn.dataset.copied;
+          }, 1800);
         }
       } catch {
         // User cancelled the native share sheet.
       }
+    });
+  });
+
+  // Events carousel controls.
+  document.querySelectorAll('[data-carousel]').forEach(section => {
+    const track = section.querySelector('[data-carousel-track]');
+    const prev = section.querySelector('[data-carousel-prev]');
+    const next = section.querySelector('[data-carousel-next]');
+    if (!track) return;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let rafId = null;
+    let lastTs = 0;
+    let paused = false;
+    let resumeTimer = null;
+
+    const getStep = () => {
+      const card = track.querySelector('.event-card');
+      if (card) {
+        const style = window.getComputedStyle(track);
+        const gap = parseFloat(style.columnGap || style.gap || '0') || 0;
+        return card.getBoundingClientRect().width + gap;
+      }
+      return Math.max(280, track.clientWidth * 0.85);
+    };
+
+    const scrollByCard = (direction) => {
+      track.scrollBy({ left: direction * getStep(), behavior: 'smooth' });
+    };
+
+    prev?.addEventListener('click', () => scrollByCard(-1));
+    next?.addEventListener('click', () => scrollByCard(1));
+
+    const startAutoScroll = () => {
+      if (reduceMotion || rafId !== null) return;
+      const speed = Number(section.dataset.carouselSpeed || 22);
+      const tick = (ts) => {
+        if (!lastTs) lastTs = ts;
+        const delta = ts - lastTs;
+        lastTs = ts;
+        if (!paused && track.scrollWidth > track.clientWidth + 2) {
+          track.scrollLeft += (speed * delta) / 1000;
+          const maxScroll = track.scrollWidth - track.clientWidth;
+          if (track.scrollLeft >= maxScroll - 2) {
+            track.scrollLeft = 0;
+          }
+        }
+        rafId = requestAnimationFrame(tick);
+      };
+      rafId = requestAnimationFrame(tick);
+    };
+
+    const stopAutoScroll = () => {
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+      lastTs = 0;
+    };
+
+    const pause = () => { paused = true; };
+    const resume = () => { paused = false; };
+    const nudgeResume = () => {
+      pause();
+      clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(resume, 1800);
+    };
+
+    section.addEventListener('pointerenter', pause);
+    section.addEventListener('pointerleave', resume);
+    section.addEventListener('focusin', pause);
+    section.addEventListener('focusout', resume);
+    track.addEventListener('touchstart', nudgeResume, { passive: true });
+    track.addEventListener('touchend', resume, { passive: true });
+    track.addEventListener('touchcancel', resume, { passive: true });
+    track.addEventListener('wheel', nudgeResume, { passive: true });
+    startAutoScroll();
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stopAutoScroll();
+      else startAutoScroll();
     });
   });
 
