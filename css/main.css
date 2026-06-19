@@ -702,10 +702,24 @@ ul, ol { list-style: none; }
 .social-btn {
   width: 36px; height: 36px; background: rgba(255,255,255,0.06);
   border-radius: 7px; display: flex; align-items: center; justify-content: center;
-  transition: background 0.2s;
+  transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+  color: rgba(255,255,255,0.72);
 }
-.social-btn:hover { background: rgba(201,168,76,0.2); }
+.social-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 18px rgba(0,0,0,0.18); }
 .social-btn svg { width: 15px; height: 15px; }
+.social-btn--facebook { background: #1877F2; color: #fff; }
+.social-btn--youtube { background: #FF0000; color: #fff; }
+.social-btn--instagram { background: linear-gradient(135deg, #F58529 0%, #DD2A7B 50%, #8134AF 100%); color: #fff; }
+.social-btn--whatsapp { background: #25D366; color: #fff; }
+.social-btn--facebook:hover,
+.social-btn--youtube:hover,
+.social-btn--instagram:hover,
+.social-btn--whatsapp:hover { box-shadow: 0 10px 22px rgba(0,0,0,0.22); }
+.social-btn svg { stroke: currentColor; fill: none; }
+.social-btn--facebook svg,
+.social-btn--whatsapp svg { fill: none; stroke: currentColor; }
+.social-btn--instagram svg { fill: none; stroke: currentColor; }
+.social-btn--youtube svg { fill: currentColor; stroke: none; }
 .footer-col-title {
   font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em;
   text-transform: uppercase; color: var(--gold); margin-bottom: 18px;
